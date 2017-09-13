@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Home</title>
+  <meta charset="UTF-8">
+  <link rel="icon" href="http://courses.cs.washington.edu/courses/cse190m/09sp/homework/1/pie_icon.gif" />
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="musicBox">
+      <a id="musicText" href="javaScript:;" onclick="controlMusic()">Stop</a>
+    </div>
+    <div class="timeBox">
+      <p id="time"></p>
+    </div>
+    <p class="title">Do you want to eat a pie?</p>
+    <div>
+      <img class="picBox" src="pic/pie.jpg" alt="pie">
+      <img class="picBox" src="pic/pie1.jpg" alt="pie">
+      <img class="picBox" src="pic/pie2.jpg" alt="pie">
+      <img class="picBox" src="pic/pie3.jpg" alt="pie">
+    </div>
+    <a class="link link-left" href="pie.html"> Yes</a>
+    <a class="link link-right" href="#">No</a>
+    <div class="bottomText">
+      <p>"If it ain't fun, don't do it."</p>
+      <p class="hideText">Mike Chan</p>
+    </div>
+    <audio id="myMusic" src="source/back.mp3" loop="loop" autoplay="autoplay"></audio>
+  </div>
+  <script>
+    function time() {
+      let nowTime = new Date();
+      let minute = nowTime.getMinutes() < 10 ? '0' + nowTime.getMinutes() : nowTime.getMinutes();
+      let second = nowTime.getSeconds() < 10 ? '0' + nowTime.getSeconds() : nowTime.getSeconds();
+      let timeStr = nowTime.getHours() + ' : ' + minute + ' : ' + second;
+      document.getElementById('time').innerHTML = timeStr;
+      setTimeout(time, 1000);
+    }
+    time();
+
+    function controlMusic() {
+      if (document.getElementById('myMusic').paused) {
+        document.getElementById('myMusic').play();
+        document.getElementById('musicText').innerHTML = 'Stop';
+      } else {
+        document.getElementById('myMusic').pause();
+        document.getElementById('musicText').innerHTML = 'Play';
+      }
+    }
+  </script>
+</body>
+
+</html>
