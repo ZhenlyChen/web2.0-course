@@ -10,31 +10,33 @@ a {
   color: rgb(164, 164, 0);
 }
 
-.title {
+h1,
+h2 {
   color: rgb(164, 164, 0);
   background: rgb(240, 240, 240);
   font-size: 18pt;
   font-family: Century Gothic, Futura, Verdana;
   text-decoration-line: underline;
   letter-spacing: 0.2em;
+  font-weight: normal;
 }
 
-.titleBig {
+h1 {
   font-size: 22pt;
   text-align: center;
   font-weight: bold;
 }
 
-.lineBox {
-  border-top: 1pt solid rgb(141, 141, 141);
-  border-bottom: 1pt solid rgb(141, 141, 141);
-}
-
-.list {
+ul {
   list-style-image: url('http://courses.cs.washington.edu/courses/cse190m/09sp/homework/1/pie_icon.gif')
 }
 
-.comments {
+blockquote {
   font-style: italic;
   background: rgb(255, 255, 200);
+}
+
+.lineBox {
+  border-top: 1pt solid rgb(141, 141, 141);
+  border-bottom: 1pt solid rgb(141, 141, 141);
 }
