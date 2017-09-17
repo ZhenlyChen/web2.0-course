@@ -1,0 +1,125 @@
+body {
+  background-image: url('http://my.ss.sysu.edu.cn/wiki/download/attachments/7045968/background.png?version=1&modificationDate=1268896312000');
+  font-size: 8pt;
+  font-family: Verdana，Tahoma, sans-serif, serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  min-width: 800px;
+}
+
+.topImage {
+  background-image: url('http://my.ss.sysu.edu.cn/wiki/download/attachments/7045968/bannerbackground.png?version=1&modificationDate=1268896312000');
+}
+
+h1 {
+  font-size: 24pt;
+  font-weight: bold;
+  font-family: Tahoma, Verdana, sans-serif, serif;
+}
+
+.allContent {
+  min-width: 800px;
+  margin: 0 auto;
+  width: 800px;
+  border: 4px solid gray;
+  text-align: left;
+}
+
+.contentBox {
+  overflow: hidden;
+}
+
+.leftBox {
+  width: 550px;
+}
+
+.rightBox {
+  float: right;
+  width: 250px;
+  background: #a2b964;
+  font-size: 8pt;
+  font-family: Arial;
+}
+
+.floatBox {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+}
+
+.rottenBox {
+  background-image: url('http://my.ss.sysu.edu.cn/wiki/download/attachments/7045968/rottenbackground.png?version=1&modificationDate=1268896385000');
+  font-size: 8pt;
+  color: white;
+  height: 83px;
+}
+
+.rottenBox>img {
+  position: absolute;
+}
+
+.titleText {
+  display: inline;
+  margin-left: 100px;
+}
+
+.titleText>span {
+  font-size: 48pt;
+  color: red;
+  font-weight: bold;
+}
+
+.comment {
+  border: 2px solid gray;
+  background: #E1D697;
+  font-size: 8pt;
+  font-weight: bold;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.comment>img {
+  margin: 5px;
+  float: left;
+  clear: both;
+}
+
+.author>img {
+  margin: auto 5px;
+  float: left;
+}
+
+.author {
+  margin-bottom: 3em;
+}
+
+.rightBox>dl {
+  padding: 0px 10px;
+}
+
+.rightBox>dl>dt {
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+.footBox {
+  background: #A2B964;
+  width: 790px;
+  margin: 0;
+  text-align: center;
+  padding: 5px;
+}
+
+.commentLeft {
+  display: inline-block;
+  vertical-align: top;
+  width: 47%;
+  margin-left: 2%;
+}
+
+.commentRight {
+  display: inline-block;
+  width: 47%;
+  margin-left: 2%;
+}
