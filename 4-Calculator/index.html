@@ -11,19 +11,21 @@
 
 <body>
   <div class="all-container">
-    <div class="icon"><img src="./images/icon.jpg" alt=""></div>
+    <div class="icon">
+      <p>Calculator</p>
+    </div>
     <div class="container">
       <h1>Calculator</h1>
+      <p class="notice">输入格式错误</p>
       <button class="button-close">X</button>
-      <p type="text" class="screen mini-screen">0</p>
+      <input type="text" class="screen mini-screen" value="" disabled>
       <p type="text" class="screen" id="screen">0</p>
       <div class="button-box">
-        <button class="button-num" value="7">7</button><button class="button-num" value="8">8</button><button class="button-num" value="9">9</button><button class="button-other">/</button>
-        <button class="button-num" value="4">4</button><button class="button-num" value="5">5</button><button class="button-num" value="6">6</button><button class="button-other">*</button>
-        <button class="button-num" value="1">1</button><button class="button-num" value="2">2</button><button class="button-num" value="3">3</button><button class="button-other">-</button>
-        <button class="button-num" value="0">0</button><button class="button-num" value=".">.</button><button class="button-other">←</button><button class="button-other">+</button>
-        <button class="button-other">(</button><button class="button-other">)</button><button class="button-other">CE</button><button class="button-other">=</button>
-
+        <button class="button-num" value="7">7</button><button class="button-num" value="8">8</button><button class="button-num" value="9">9</button><button class="button-other button-operator" value="/">/</button>
+        <button class="button-num" value="4">4</button><button class="button-num" value="5">5</button><button class="button-num" value="6">6</button><button class="button-other button-operator" value="*">*</button>
+        <button class="button-num" value="1">1</button><button class="button-num" value="2">2</button><button class="button-num" value="3">3</button><button class="button-other button-operator" value="-">-</button>
+        <button class="button-num" value="0">0</button><button class="button-num" value=".">.</button><button class="button-other" id="button-back">←</button><button class="button-other button-operator" value="+">+</button>
+        <button class="button-other" id="button-left">(</button><button class="button-other" id="button-right">)</button><button class="button-other" id="button-ce">CE</button><button class="button-other" id="button-sum">=</button>
       </div>
     </div>
   </div>
