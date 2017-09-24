@@ -112,11 +112,15 @@ function upDate(showStr) {
   if (showStr === undefined) showStr = str;
   if (showStr === '') showStr = 0;
   document.getElementById('screen').innerHTML = showStr;
-  let miniScreen = document.getElementsByClassName('mini-screen')[0];
-  miniScreen.value = screen;
-  miniScreen.scrollLeft = screen.length * 10;
+  showScreen();
 } // 更新显示
 
+function showScreen(str) {
+  if (str === undefined) str = screen;
+  let miniScreen = document.getElementsByClassName('mini-screen')[0];
+  miniScreen.value = str;
+  miniScreen.scrollLeft = screen.length * 10;
+}
 
 function btnNumber() {
   if (str.length > 17) return; // 数字长度限制 18
@@ -150,7 +154,7 @@ function btnOperator() {
 } // 运算符
 
 function buttonLeft() { // 左括号
-  if (!isNaN(parseInt(str[str.length - 1]))) {
+  if (!isNaN(parseInt(screen[screen.length - 1]))) {
     alertErr();
     return;
   }
@@ -170,7 +174,16 @@ function buttonRight() { // 右括号
 }
 
 function buttonSum() { // 等于号
-
+  let result = sum(screen);
+  if (result !== null) {
+    str = '';
+    let temp = screen + '=';
+    screen = '';
+    upDate(result);
+    showScreen(temp);
+  } else {
+    alertErr();
+  }
 }
 
 function buttonBack() { // 退格
@@ -180,6 +193,10 @@ function buttonBack() { // 退格
   }
   if (str.length > 1) {
     str = str.substr(0, str.length - 1);
+    if (str === '0') { // 处理小数点前的0
+      str = str.substr(0, str.length - 1);
+      screen = screen.substr(0, screen.length - 1);
+    }
     upDate();
   } else if (str.length === 1) {
     str = '';
@@ -211,6 +228,59 @@ function alertErr() {
 function alertClear() {
   document.getElementsByClassName('notice')[0].style.display = 'none';
 } // 关闭提示
+
+function sum(str) {
+  if (braceMatching(str) === false) return null;
+  if (str.indexOf('(') !== -1) { // 存在括号
+    let leftBrace = -1;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '(') leftBrace = i;
+      if (str[i] === ')') {
+        return sum(str.substr(0, leftBrace) + sum(str.substr(leftBrace + 1, i - leftBrace - 1) + str.substr(i + 1, str.length - i - 1)));
+      }
+    }
+  } else if (str.indexOf('*') !== -1 || str.indexOf('/') !== -1) { // 存在 * /
+    let stackStr = [];
+    let pointer = 0;
+    let operator = '';
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '*' || str[i] === '/') {
+        operator = str[i];
+        stackStr.push(str.substr(0, i));
+        pointer = i;
+        continue;
+      }
+      if (str[i] === '*' || str[i] === '/' || i === (str.length - 1)) {
+        if (operator === '*') {
+          return sum((sum(stackStr[0]) * sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
+        } else if (operator === '/') {
+          return sum((sum(stackStr[0]) / sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
+        }
+      }
+    }
+  } else if (str.indexOf('+') !== -1 || str.indexOf('-') !== -1) { // 存在 + -
+    let stackStr = [];
+    let pointer = 0;
+    let operator = '';
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '+' || str[i] === '-') {
+        operator = str[i];
+        stackStr.push(str.substr(0, i));
+        pointer = i;
+        continue;
+      }
+      if (str[i] === '+' || str[i] === '-' || i === (str.length - 1)) {
+        if (operator === '+') {
+          return sum((sum(stackStr[0]) + sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
+        } else if (operator === '-') {
+          return sum((sum(stackStr[0]) - sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
+        }
+      }
+    }
+  } else {
+    return parseFloat(str);
+  }
+}
 
 
 function braceMatching(str) { // 括号匹配

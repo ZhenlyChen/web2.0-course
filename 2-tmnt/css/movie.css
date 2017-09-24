@@ -10,6 +10,7 @@ body {
 }
 
 .topImage {
+  height: 50px;
   background-image: url('http://my.ss.sysu.edu.cn/wiki/download/attachments/7045968/bannerbackground.png');
 }
 
