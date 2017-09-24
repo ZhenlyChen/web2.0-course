@@ -145,6 +145,14 @@ function btnNumber() {
 
 function btnOperator() {
   if (screen === '') {
+    upDate();
+    alertErr();
+    return;
+  }
+  if (screen[screen.length - 1] === '+' ||
+    screen[screen.length - 1] === '-' ||
+    screen[screen.length - 1] === '*' ||
+    screen[screen.length - 1] === '/') {
     alertErr();
     return;
   }
@@ -231,6 +239,8 @@ function alertClear() {
 
 function sum(str) {
   if (braceMatching(str) === false) return null;
+  if (typeof str !== 'string') return str;
+  console.log('str', str);
   if (str.indexOf('(') !== -1) { // 存在括号
     let leftBrace = -1;
     for (let i = 0; i < str.length; i++) {
@@ -239,42 +249,58 @@ function sum(str) {
         return sum(str.substr(0, leftBrace) + sum(str.substr(leftBrace + 1, i - leftBrace - 1) + str.substr(i + 1, str.length - i - 1)));
       }
     }
-  } else if (str.indexOf('*') !== -1 || str.indexOf('/') !== -1) { // 存在 * /
-    let stackStr = [];
-    let pointer = 0;
-    let operator = '';
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === '*' || str[i] === '/') {
-        operator = str[i];
-        stackStr.push(str.substr(0, i));
-        pointer = i;
-        continue;
-      }
-      if (str[i] === '*' || str[i] === '/' || i === (str.length - 1)) {
-        if (operator === '*') {
-          return sum((sum(stackStr[0]) * sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
-        } else if (operator === '/') {
-          return sum((sum(stackStr[0]) / sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
-        }
-      }
-    }
   } else if (str.indexOf('+') !== -1 || str.indexOf('-') !== -1) { // 存在 + -
     let stackStr = [];
+    let stackOperator = [];
     let pointer = 0;
-    let operator = '';
     for (let i = 0; i < str.length; i++) {
       if (str[i] === '+' || str[i] === '-') {
-        operator = str[i];
-        stackStr.push(str.substr(0, i));
-        pointer = i;
-        continue;
-      }
-      if (str[i] === '+' || str[i] === '-' || i === (str.length - 1)) {
-        if (operator === '+') {
-          return sum((sum(stackStr[0]) + sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
-        } else if (operator === '-') {
-          return sum((sum(stackStr[0]) - sum(str.substr(pointer + 1, i - pointer - 1))).toString() + str.substr(i + 1, str.length - i - 1));
+        stackOperator.push(str[i]);
+        stackStr.push(str.substr(pointer, i - pointer));
+        pointer = i + 1;
+      } else if (i === (str.length - 1)) {
+        // console.log(pointer, i - pointer + 1)
+        stackStr.push(str.substr(pointer, i - pointer + 1));
+        // console.log(stackStr, stackOperator);
+        let a = stackStr[0];
+        stackStr.splice(0, 1);
+        for (let operator of stackOperator) {
+          if (operator === '+') {
+            a = sum(a) + sum(stackStr[0]);
+            stackStr.splice(0, 1);
+          } else {
+            a = sum(a) - sum(stackStr[0]);
+            stackStr.splice(0, 1);
+          }
         }
+        return a;
+      }
+    }
+  } else if (str.indexOf('*') !== -1 || str.indexOf('/') !== -1) { // 存在 * /
+    let stackStr = [];
+    let stackOperator = [];
+    let pointer = 0;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '*' || str[i] === '/') {
+        stackOperator.push(str[i]);
+        stackStr.push(str.substr(pointer, i - pointer));
+        pointer = i + 1;
+      } else if (i === (str.length - 1)) {
+        // console.log(pointer, i - pointer + 1)
+        stackStr.push(str.substr(pointer, i - pointer + 1));
+        // console.log(stackStr, stackOperator);
+        let a = stackStr[0];
+        stackStr.splice(0, 1);
+        for (let operator of stackOperator) {
+          if (operator === '*') {
+            a = sum(a) * sum(stackStr[0]);
+            stackStr.splice(0, 1);
+          } else {
+            a = sum(a) / sum(stackStr[0]);
+            stackStr.splice(0, 1);
+          }
+        }
+        return a;
       }
     }
   } else {
