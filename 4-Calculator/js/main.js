@@ -237,7 +237,94 @@ function alertClear() {
   document.getElementsByClassName('notice')[0].style.display = 'none';
 } // 关闭提示
 
+Array.prototype.top = function() {
+  if (this.length > 0) {
+    return this[this.length - 1];
+  } else {
+    return null;
+  }
+}
+Array.prototype.front = function() {
+  if (this.length > 0) {
+    return this[0];
+  } else {
+    return null;
+  }
+}
+
+function getPriority(char) {
+  if (char === '+' || char === '-') {
+    return 1;
+  } else if (char === '(' || char === null) {
+    return 0;
+  } else if (char === '*' || char === '/') {
+    return 2;
+  }
+  return null;
+}
+
+function dealStr(str) {
+  let stackOperator = [];
+  let stackStr = [];
+  let stackNum = [];
+  for (let i = 0; i < str.length; i++) {
+    //console.log(stackOperator, stackStr, str[i]);
+    if (!isNaN(parseFloat(str[i]))) { // 为数字
+      stackNum.push(str[i]);
+      continue;
+    } else if (stackNum.length > 0) {
+      stackStr.push(parseFloat(stackNum.join('')));
+      stackNum = [];
+    }
+    if (str[i] === '(') {
+      stackOperator.push(str[i]);
+    } else if (str[i] === ')') {
+      while (stackOperator.top() !== '(') {
+        stackStr.push(stackOperator.pop());
+      }
+      stackOperator.pop();
+    } else if (str[i] === '+' || str[i] === '-' || str[i] === '*' || str[i] === '/') {
+      while (getPriority(str[i]) <= getPriority(stackOperator.top())) {
+        stackStr.push(stackOperator.pop());
+      }
+      stackOperator.push(str[i]);
+    }
+  }
+  if (stackNum.length > 0) {
+    stackStr.push(parseFloat(stackNum.join('')));
+  }
+  while (stackOperator.length > 0) {
+    stackStr.push(stackOperator.pop());
+  }
+  return stackStr;
+  // 处理为逆波兰算式
+}
+
 function sum(str) {
+  if (braceMatching(str) === false) return null;
+  let stackStr = dealStr(str);
+  let stackNew = [];
+  while (stackStr.front() !== null) {
+    //console.log('top', stackStr.front());
+    if (!isNaN(parseFloat(stackStr.front()))) { // 为数字
+      stackNew.push(parseFloat(stackStr.front()));
+    } else {
+      let b = parseFloat(stackNew.pop());
+      let a = parseFloat(stackNew.pop());
+      //console.log('a', a, 'b', b);
+      if (stackStr.front() === '+') stackNew.push(a + b);
+      if (stackStr.front() === '-') stackNew.push(a - b);
+      if (stackStr.front() === '*') stackNew.push(a * b);
+      if (stackStr.front() === '/') stackNew.push(a / b);
+    }
+    stackStr.splice(0, 1);
+  }
+  //console.log(stackStr, stackNew);
+  return stackNew[0];
+  // 计算逆波兰算式结果
+}
+
+/* function sum(str) {
   if (braceMatching(str) === false) return null;
   if (typeof str !== 'string') return str;
   console.log('str', str);
@@ -246,15 +333,19 @@ function sum(str) {
     for (let i = 0; i < str.length; i++) {
       if (str[i] === '(') leftBrace = i;
       if (str[i] === ')') {
-        return sum(str.substr(0, leftBrace) + sum(str.substr(leftBrace + 1, i - leftBrace - 1) + str.substr(i + 1, str.length - i - 1)));
+        return sum(str.substr(0, leftBrace) + sum(str.substr(leftBrace + 1, i - leftBrace - 1)) + str.substr(i + 1, str.length - i - 1));
       }
     }
   } else if (str.indexOf('+') !== -1 || str.indexOf('-') !== -1) { // 存在 + -
+    console.log('plus');
     let stackStr = [];
     let stackOperator = [];
     let pointer = 0;
     for (let i = 0; i < str.length; i++) {
       if (str[i] === '+' || str[i] === '-') {
+        if (isNaN(parseFloat(str[i - 1]))) {
+          continue;
+        }
         stackOperator.push(str[i]);
         stackStr.push(str.substr(pointer, i - pointer));
         pointer = i + 1;
@@ -306,7 +397,7 @@ function sum(str) {
   } else {
     return parseFloat(str);
   }
-}
+} */
 
 
 function braceMatching(str) { // 括号匹配
@@ -349,3 +440,82 @@ document.getElementById('button-back').onclick = buttonBack;
 document.getElementById('button-ce').onclick = buttonCE;
 
 //--------------
+
+// 绑定按钮
+document.onkeyup = function(event) {
+  var e = event || window.event;
+  var keyCode = e.keyCode || e.which;
+  console.log(keyCode);
+  switch (keyCode) {
+    case 49:
+    case 97:
+      document.getElementById('btn_1').click();
+      break;
+    case 50:
+    case 98:
+      document.getElementById('btn_2').click();
+      break;
+    case 51:
+    case 99:
+      document.getElementById('btn_3').click();
+      break;
+    case 52:
+    case 100:
+      document.getElementById('btn_4').click();
+      break;
+    case 53:
+    case 101:
+      document.getElementById('btn_5').click();
+      break;
+    case 54:
+    case 102:
+      document.getElementById('btn_6').click();
+      break;
+    case 55:
+    case 103:
+      document.getElementById('btn_7').click();
+      break;
+    case 56:
+    case 104:
+      document.getElementById('btn_8').click();
+      break;
+    case 57:
+    case 105:
+      document.getElementById('btn_9').click();
+      break;
+    case 48:
+    case 96:
+      document.getElementById('btn_0').click();
+      break;
+    case 110:
+      document.getElementById('btn_point').click();
+      break;
+    case 219:
+      document.getElementById('button-left').click();
+      break;
+    case 221:
+      document.getElementById('button-right').click();
+      break;
+    case 107:
+      document.getElementById('btn_plus').click();
+      break;
+    case 109:
+      document.getElementById('btn_reduce').click();
+      break;
+    case 106:
+      document.getElementById('btn_x').click();
+      break;
+    case 111:
+      document.getElementById('btn_division').click();
+      break;
+    case 187:
+    case 13:
+      document.getElementById('button-sum').click();
+      break;
+    case 8:
+      document.getElementById('button-back').click();
+      break;
+    default:
+      break;
+  }
+}
