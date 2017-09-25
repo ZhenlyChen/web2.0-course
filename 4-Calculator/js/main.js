@@ -132,7 +132,7 @@ function btnNumber() {
     return;
   } // 处理多个小数点
 
-  if (this.value === '.' && str === '') {
+  if (this.value === '.' && str === '' && isNaN(parseFloat(screen[screen.length - 1]))) {
     str += '0';
     screen += '0';
   } // 处理开头小数点
@@ -145,14 +145,19 @@ function btnNumber() {
 
 function btnOperator() {
   if (screen === '') {
-    upDate();
-    alertErr();
-    return;
+    if (document.getElementById('screen').innerHTML === '') {
+      upDate();
+      alertErr();
+      return;
+    } else {
+      screen += document.getElementById('screen').innerHTML;
+    }
   }
   if (screen[screen.length - 1] === '+' ||
     screen[screen.length - 1] === '-' ||
     screen[screen.length - 1] === '*' ||
-    screen[screen.length - 1] === '/') {
+    screen[screen.length - 1] === '/' ||
+    screen[screen.length - 1] === '(') {
     alertErr();
     return;
   }
@@ -172,6 +177,11 @@ function buttonLeft() { // 左括号
 }
 
 function buttonRight() { // 右括号
+  if (isNaN(parseInt(screen[screen.length - 1]))) {
+    alertErr();
+    return;
+  }
+
   if (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
     str = '';
     screen += ')';
@@ -196,15 +206,17 @@ function buttonSum() { // 等于号
 
 function buttonBack() { // 退格
   if (screen.length > 0) {
+    if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
     screen = screen.substr(0, screen.length - 1);
-    upDate();
   }
+  upDate();
   if (str.length > 1) {
+    if (str[str.length - 1] === '.' && str[str.length - 2] === '0') str = str.substr(0, str.length - 1);
     str = str.substr(0, str.length - 1);
-    if (str === '0') { // 处理小数点前的0
+    /* if (str === '0') { // 处理小数点前的0
       str = str.substr(0, str.length - 1);
       screen = screen.substr(0, screen.length - 1);
-    }
+    } */
     upDate();
   } else if (str.length === 1) {
     str = '';
@@ -268,11 +280,14 @@ function dealStr(str) {
   let stackStr = [];
   let stackNum = [];
   for (let i = 0; i < str.length; i++) {
-    //console.log(stackOperator, stackStr, str[i]);
-    if (!isNaN(parseFloat(str[i]))) { // 为数字
+    // console.log(stackOperator, stackStr, stackNum);
+    if (!isNaN(parseFloat(str[i])) || str[i] === '.') { // 为数字
       stackNum.push(str[i]);
       continue;
     } else if (stackNum.length > 0) {
+      if (stackNum.indexOf('.', stackNum.indexOf('.')) !== -1) {
+        return null;
+      }
       stackStr.push(parseFloat(stackNum.join('')));
       stackNum = [];
     }
@@ -303,6 +318,10 @@ function dealStr(str) {
 function sum(str) {
   if (braceMatching(str) === false) return null;
   let stackStr = dealStr(str);
+  if (stackStr === null) {
+    alertErr();
+    return null;
+  }
   let stackNew = [];
   while (stackStr.front() !== null) {
     //console.log('top', stackStr.front());
@@ -323,82 +342,6 @@ function sum(str) {
   return stackNew[0];
   // 计算逆波兰算式结果
 }
-
-/* function sum(str) {
-  if (braceMatching(str) === false) return null;
-  if (typeof str !== 'string') return str;
-  console.log('str', str);
-  if (str.indexOf('(') !== -1) { // 存在括号
-    let leftBrace = -1;
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === '(') leftBrace = i;
-      if (str[i] === ')') {
-        return sum(str.substr(0, leftBrace) + sum(str.substr(leftBrace + 1, i - leftBrace - 1)) + str.substr(i + 1, str.length - i - 1));
-      }
-    }
-  } else if (str.indexOf('+') !== -1 || str.indexOf('-') !== -1) { // 存在 + -
-    console.log('plus');
-    let stackStr = [];
-    let stackOperator = [];
-    let pointer = 0;
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === '+' || str[i] === '-') {
-        if (isNaN(parseFloat(str[i - 1]))) {
-          continue;
-        }
-        stackOperator.push(str[i]);
-        stackStr.push(str.substr(pointer, i - pointer));
-        pointer = i + 1;
-      } else if (i === (str.length - 1)) {
-        // console.log(pointer, i - pointer + 1)
-        stackStr.push(str.substr(pointer, i - pointer + 1));
-        // console.log(stackStr, stackOperator);
-        let a = stackStr[0];
-        stackStr.splice(0, 1);
-        for (let operator of stackOperator) {
-          if (operator === '+') {
-            a = sum(a) + sum(stackStr[0]);
-            stackStr.splice(0, 1);
-          } else {
-            a = sum(a) - sum(stackStr[0]);
-            stackStr.splice(0, 1);
-          }
-        }
-        return a;
-      }
-    }
-  } else if (str.indexOf('*') !== -1 || str.indexOf('/') !== -1) { // 存在 * /
-    let stackStr = [];
-    let stackOperator = [];
-    let pointer = 0;
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === '*' || str[i] === '/') {
-        stackOperator.push(str[i]);
-        stackStr.push(str.substr(pointer, i - pointer));
-        pointer = i + 1;
-      } else if (i === (str.length - 1)) {
-        // console.log(pointer, i - pointer + 1)
-        stackStr.push(str.substr(pointer, i - pointer + 1));
-        // console.log(stackStr, stackOperator);
-        let a = stackStr[0];
-        stackStr.splice(0, 1);
-        for (let operator of stackOperator) {
-          if (operator === '*') {
-            a = sum(a) * sum(stackStr[0]);
-            stackStr.splice(0, 1);
-          } else {
-            a = sum(a) / sum(stackStr[0]);
-            stackStr.splice(0, 1);
-          }
-        }
-        return a;
-      }
-    }
-  } else {
-    return parseFloat(str);
-  }
-} */
-
 
 function braceMatching(str) { // 括号匹配
   let stack = [];
@@ -445,7 +388,6 @@ document.getElementById('button-ce').onclick = buttonCE;
 document.onkeyup = function(event) {
   var e = event || window.event;
   var keyCode = e.keyCode || e.which;
-  console.log(keyCode);
   switch (keyCode) {
     case 49:
     case 97:
