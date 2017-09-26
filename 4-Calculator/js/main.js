@@ -69,6 +69,7 @@ startDrag(oBar, oBox);
 
 //  动画效果 ----------------
 let delay = false;
+/*   ie,edge 不兼容 for of 有点无奈
 for (let dom of document.getElementsByClassName('button-other')) {
   dom.onmousemove = function(e) {
     if (delay) {
@@ -86,6 +87,28 @@ for (let dom of document.getElementsByClassName('button-other')) {
     delay = true;
   }
   dom.onmouseup = function(e) {
+    let val = Math.ceil((e.offsetX / 94) * 100);
+    this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
+  }
+} */
+let dom_other = document.getElementsByClassName('button-other')
+for (let dom in dom_other) {
+  dom_other[dom].onmousemove = function(e) {
+    if (delay) {
+      delay = false;
+      return;
+    }
+    let val = Math.ceil((e.offsetX / 94) * 100);
+    this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
+  }
+  dom_other[dom].onmouseout = function(e) {
+    this.style.background = 'rgb(244, 244, 244)';
+  }
+  dom_other[dom].onmousedown = function(e) {
+    this.style.background = 'rgb(169, 239, 255)';
+    delay = true;
+  }
+  dom_other[dom].onmouseup = function(e) {
     let val = Math.ceil((e.offsetX / 94) * 100);
     this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
   }
@@ -366,13 +389,22 @@ function braceMatching(str) { // 括号匹配
 }
 
 // 绑定事件---------
-
+/*  es6 ie edge 不能运行
 for (let dom of document.getElementsByClassName('button-num')) {
   dom.onclick = btnNumber;
 }
 
 for (let dom of document.getElementsByClassName('button-operator')) {
   dom.onclick = btnOperator;
+}
+ */
+let dom_num = document.getElementsByClassName('button-num');
+for (let i in dom_num) {
+  dom_num[i].onclick = btnNumber;
+}
+let dom_operator = document.getElementsByClassName('button-operator');
+for (let i in dom_operator) {
+  dom_operator[i].onclick = btnOperator;
 }
 
 document.getElementsByClassName('notice')[0].onclick = alertClear;
