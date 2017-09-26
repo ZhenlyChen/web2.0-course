@@ -308,7 +308,7 @@ function dealStr(str) {
       stackNum.push(str[i]);
       continue;
     } else if (stackNum.length > 0) {
-      if (stackNum.indexOf('.', stackNum.indexOf('.')) !== -1) {
+      if (stackNum.indexOf('.', stackNum.indexOf('.') + 1) !== -1) {
         return null;
       }
       stackStr.push(parseFloat(stackNum.join('')));
