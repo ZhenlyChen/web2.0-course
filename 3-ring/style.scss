@@ -1,3 +1,7 @@
+@mixin transition-effect($time, $delay) {
+  transition: all $time ease $delay;
+}
+
 #at-plus-container {
   text-align: center;
   color: #fff;
@@ -8,8 +12,8 @@
 
 #bottom-positioner {
   margin: 0 auto;
-  &:hover {
-    #button {
+  #button {
+    &:hover {
       .apb {
         height: 50px;
         width: 50px;
@@ -27,6 +31,9 @@
         opacity: 1;
         ul {
           opacity: 1;
+          li {
+            opacity: 1;
+          }
         }
       }
       #control-ring-container {
@@ -64,8 +71,8 @@
 #button {
   div {
     position: fixed;
-    transition: all .5s;
-    transition-delay: .5s;
+    @include transition-effect(.5s,
+    .5s);
     display: inline-block;
     margin: 0 auto;
   }
@@ -96,13 +103,13 @@
       border-radius: 100px;
     }
     * {
-      transition: all .5s;
-      transition-delay: .5s;
+      @include transition-effect(.5s,
+      .5s);
     }
     .button {
       &::after {
-        transition: all .2s;
-        transition-delay: .3s;
+        @include transition-effect(.2s,
+        .3s);
         opacity: 0;
         content: "";
         display: block;
@@ -167,13 +174,14 @@
   div {
     position: relative;
     ul {
-      transition: all .5s;
-      transition-delay: .5s;
+      transition: opacity .3s ease-in .2s;
       list-style-type: none;
       font-weight: bold;
       opacity: 0;
       transform: translateX(-20px);
       li {
+        opacity: 0;
+        transition: all .2s ease .8s;
         display: inline-block;
         img {
           margin-right: 5px;

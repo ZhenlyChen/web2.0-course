@@ -3,63 +3,50 @@
   color: #fff;
   position: absolute;
   bottom: 150px;
-  left: 50%;
-}
+  left: 50%; }
 
 #bottom-positioner {
-  margin: 0 auto;
-}
-#bottom-positioner:hover #button .apb {
-  height: 50px;
-  width: 50px;
-  background: #303f9f;
-  background-image: url("./assets/images/atplus_green.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 80%;
-}
-#bottom-positioner:hover #button #info-bar {
-  transform: translate(-35px, -140px);
-  background: #7e7e7e;
-  height: 130px;
-  width: 130px;
-  opacity: 1;
-}
-#bottom-positioner:hover #button #info-bar ul {
-  opacity: 1;
-}
-#bottom-positioner:hover #button #control-ring-container {
-  opacity: 1;
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .button::after {
-  opacity: 1;
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .unread {
-  opacity: 1;
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .mask {
-  transform: translate(-50px, -20px);
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .history {
-  transform: translate(-65px, 20px);
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .message {
-  transform: translate(-50px, 55px);
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .setting {
-  transform: translate(-15px, 75px);
-}
-#bottom-positioner:hover #button #control-ring-container #control-ring .sign {
-  transform: translate(25px, 73px);
-}
+  margin: 0 auto; }
+  #bottom-positioner #button:hover .apb {
+    height: 50px;
+    width: 50px;
+    background: #303f9f;
+    background-image: url("./assets/images/atplus_green.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%; }
+  #bottom-positioner #button:hover #info-bar {
+    transform: translate(-35px, -140px);
+    background: #7e7e7e;
+    height: 130px;
+    width: 130px;
+    opacity: 1; }
+    #bottom-positioner #button:hover #info-bar ul {
+      opacity: 1; }
+      #bottom-positioner #button:hover #info-bar ul li {
+        opacity: 1; }
+  #bottom-positioner #button:hover #control-ring-container {
+    opacity: 1; }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .button::after {
+      opacity: 1; }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .unread {
+      opacity: 1; }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .mask {
+      transform: translate(-50px, -20px); }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .history {
+      transform: translate(-65px, 20px); }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .message {
+      transform: translate(-50px, 55px); }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .setting {
+      transform: translate(-15px, 75px); }
+    #bottom-positioner #button:hover #control-ring-container #control-ring .sign {
+      transform: translate(25px, 73px); }
 
 #button div {
   position: fixed;
-  transition: all .5s;
-  transition-delay: .5s;
+  transition: all 0.5s ease 0.5s;
   display: inline-block;
-  margin: 0 auto;
-}
+  margin: 0 auto; }
 
 .apb {
   height: 30px;
@@ -69,115 +56,91 @@
   background-image: url("./assets/images/atplus_white.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 90%;
-}
+  background-size: 90%; }
 
 #control-ring-container {
-  opacity: 0;
-}
-#control-ring-container #control-ring {
-  list-style-type: none;
-  position: fixed;
-  margin-left: -40px;
-  margin-top: -4px;
-}
-#control-ring-container #control-ring li {
-  position: fixed;
-  display: inline-block;
-  background: #686868;
-  border-radius: 100px;
-}
-#control-ring-container #control-ring * {
-  transition: all .5s;
-  transition-delay: .5s;
-}
-#control-ring-container #control-ring .button::after {
-  transition: all .2s;
-  transition-delay: .3s;
-  opacity: 0;
-  content: "";
-  display: block;
-  border-radius: 100px;
-  background: #686868;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 60%;
-  width: 30px;
-  height: 30px;
-  overflow: hidden;
-}
-#control-ring-container #control-ring .unread {
-  z-index: 1024;
-  transition: all .2s;
-  transition-delay: .3s;
-  opacity: 0;
-  display: inline-block;
-  text-align: center;
-  position: absolute;
-  transform: translate(4px, -6px);
-  background: red;
-  border-radius: 50%;
-  font-size: 12px;
-  height: 16px;
-  width: 16px;
-}
-#control-ring-container #control-ring .mask::after {
-  background-image: url("./assets/images/nomask.png");
-}
-#control-ring-container #control-ring .history::after {
-  background-image: url("./assets/images/history.png");
-}
-#control-ring-container #control-ring .setting::after {
-  background-image: url("./assets/images/setting.png");
-}
-#control-ring-container #control-ring .message::after {
-  background-image: url("./assets/images/message.png");
-}
-#control-ring-container #control-ring .sign::after {
-  background-image: url("./assets/images/signin.png");
-}
+  opacity: 0; }
+  #control-ring-container #control-ring {
+    list-style-type: none;
+    position: fixed;
+    margin-left: -40px;
+    margin-top: -4px; }
+    #control-ring-container #control-ring li {
+      position: fixed;
+      display: inline-block;
+      background: #686868;
+      border-radius: 100px; }
+    #control-ring-container #control-ring * {
+      transition: all 0.5s ease 0.5s; }
+    #control-ring-container #control-ring .button::after {
+      transition: all 0.2s ease 0.3s;
+      opacity: 0;
+      content: "";
+      display: block;
+      border-radius: 100px;
+      background: #686868;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 60%;
+      width: 30px;
+      height: 30px;
+      overflow: hidden; }
+    #control-ring-container #control-ring .unread {
+      z-index: 1024;
+      transition: all .2s;
+      transition-delay: .3s;
+      opacity: 0;
+      display: inline-block;
+      text-align: center;
+      position: absolute;
+      transform: translate(4px, -6px);
+      background: red;
+      border-radius: 50%;
+      font-size: 12px;
+      height: 16px;
+      width: 16px; }
+    #control-ring-container #control-ring .mask::after {
+      background-image: url("./assets/images/nomask.png"); }
+    #control-ring-container #control-ring .history::after {
+      background-image: url("./assets/images/history.png"); }
+    #control-ring-container #control-ring .setting::after {
+      background-image: url("./assets/images/setting.png"); }
+    #control-ring-container #control-ring .message::after {
+      background-image: url("./assets/images/message.png"); }
+    #control-ring-container #control-ring .sign::after {
+      background-image: url("./assets/images/signin.png"); }
 
 #info-bar {
   height: 10px;
   width: 10px;
   border-radius: 100px;
-  opacity: 0;
-}
-#info-bar div {
-  position: relative;
-}
-#info-bar div ul {
-  transition: all .5s;
-  transition-delay: .5s;
-  list-style-type: none;
-  font-weight: bold;
-  opacity: 0;
-  transform: translateX(-20px);
-}
-#info-bar div ul li {
-  display: inline-block;
-}
-#info-bar div ul li img {
-  margin-right: 5px;
-}
-#info-bar div span {
-  vertical-align: top;
-}
-#info-bar .mine {
-  color: #2bd898;
-}
-#info-bar .user {
-  margin-top: -10px;
-}
-#info-bar .comment {
-  margin-bottom: 8px;
-  font-size: 30px;
-}
-#info-bar .posted {
-  float: left;
-}
-#info-bar .like {
-  float: right;
-}
+  opacity: 0; }
+  #info-bar div {
+    position: relative; }
+    #info-bar div ul {
+      transition: opacity .3s ease-in .2s;
+      list-style-type: none;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateX(-20px); }
+      #info-bar div ul li {
+        opacity: 0;
+        transition: all .2s ease .8s;
+        display: inline-block; }
+        #info-bar div ul li img {
+          margin-right: 5px; }
+    #info-bar div span {
+      vertical-align: top; }
+  #info-bar .mine {
+    color: #2bd898; }
+  #info-bar .user {
+    margin-top: -10px; }
+  #info-bar .comment {
+    margin-bottom: 8px;
+    font-size: 30px; }
+  #info-bar .posted {
+    float: left; }
+  #info-bar .like {
+    float: right; }
 
 /*# sourceMappingURL=style.css.map */
