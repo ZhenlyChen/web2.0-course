@@ -130,6 +130,7 @@ document.getElementsByClassName('icon')[0].onclick = function(e) {
 // ----------------------
 let str = ''; // 大屏幕
 let screen = ''; // 小屏幕
+let mem = ''
 
 function upDate(showStr) {
   if (showStr === undefined) showStr = str;
@@ -167,20 +168,10 @@ function btnNumber() {
 } // 数字键
 
 function btnOperator() {
-  if (screen === '') {
-    if (document.getElementById('screen').innerHTML === '') {
-      upDate();
-      alertErr();
-      return;
-    } else {
-      screen += document.getElementById('screen').innerHTML;
-    }
+  if (screen === '' && str === '' && document.getElementById('screen').innerHTML !== '') {
+    screen += document.getElementById('screen').innerHTML;
   }
-  if (screen[screen.length - 1] === '+' ||
-    screen[screen.length - 1] === '-' ||
-    screen[screen.length - 1] === '*' ||
-    screen[screen.length - 1] === '/' ||
-    screen[screen.length - 1] === '(') {
+  if (this.value !== '-' && screen === '') {
     alertErr();
     return;
   }
@@ -200,11 +191,6 @@ function buttonLeft() { // 左括号
 }
 
 function buttonRight() { // 右括号
-  if (isNaN(parseInt(screen[screen.length - 1]))) {
-    alertErr();
-    return;
-  }
-
   if (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
     str = '';
     screen += ')';
@@ -215,8 +201,12 @@ function buttonRight() { // 右括号
 }
 
 function buttonSum() { // 等于号
+  alertClear();
   let result = sum(screen);
   if (result !== null) {
+    if (!isNaN(parseFloat(result))) {
+      result = Math.ceil(result * 100000) / 100000;
+    }
     str = '';
     let temp = screen + '=';
     screen = '';
@@ -227,7 +217,17 @@ function buttonSum() { // 等于号
   }
 }
 
+function buttonInput() {
+
+}
+
+function buttonHistory() {
+
+}
+
+
 function buttonBack() { // 退格
+
   if (screen.length > 0) {
     if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
     screen = screen.substr(0, screen.length - 1);
@@ -255,6 +255,32 @@ function buttonCE() { // CE
   document.getElementById('screen').innerHTML = '0';
 }
 
+function btnFun() {
+  let num = document.getElementById('screen').innerHTML;
+  if (screen === '' && str === '' && num !== '' && !isNaN(parseFloat(num))) {
+    screen += this.value + '(' + num + ')';
+    upDate(this.value);
+    return;
+  }
+  if (!isNaN(parseFloat(screen[screen.length - 1]))) {
+    alertErr();
+    return;
+  }
+  screen += this.value + '(';
+  upDate(this.value);
+  str = '';
+}
+
+function buttonMS() {
+  mem = document.getElementById('screen').innerHTML;
+}
+
+function buttonMR() {
+  str = mem;
+  screen += mem;
+  upDate();
+}
+
 function findInStr(str, char) {
   return (str.split(char)).length - 1;
 }
@@ -272,6 +298,28 @@ function alertClear() {
   document.getElementsByClassName('notice')[0].style.display = 'none';
 } // 关闭提示
 
+function sum(str) {
+  if (!braceMatching(str)) return null;
+  str = str.replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos').replace(/tan/g, 'Math.tan').replace(/ln/g, 'Math.log').replace(/sqrt/g, 'Math.sqrt');
+  let reg = /([0-9.]*)\^([0-9.]*)/;
+  while (reg.test(str)) {
+    let arr = str.match(reg);
+    str = str.replace(reg, 'Math.pow(' + arr[1] + ',' + arr[2] + ')');
+  }
+  console.log(str);
+  try {
+    let result = eval(str);
+    if (isNaN(result)) {
+      return null;
+    } else {
+      return result;
+    }
+  } catch (e) {
+    return null;
+  }
+}
+
+/*  逆波兰算法
 Array.prototype.top = function() {
   if (this.length > 0) {
     return this[this.length - 1];
@@ -365,7 +413,7 @@ function sum(str) {
   return stackNew[0];
   // 计算逆波兰算式结果
 }
-
+ */
 function braceMatching(str) { // 括号匹配
   let stack = [];
   for (let i = 0; i < str.length; i++) {
@@ -406,6 +454,10 @@ let dom_operator = document.getElementsByClassName('button-operator');
 for (let i in dom_operator) {
   dom_operator[i].onclick = btnOperator;
 }
+let dom_fun = document.getElementsByClassName('button-fun');
+for (let i in dom_fun) {
+  dom_fun[i].onclick = btnFun;
+}
 
 document.getElementsByClassName('notice')[0].onclick = alertClear;
 document.getElementById('button-left').onclick = buttonLeft;
@@ -413,6 +465,10 @@ document.getElementById('button-right').onclick = buttonRight;
 document.getElementById('button-sum').onclick = buttonSum;
 document.getElementById('button-back').onclick = buttonBack;
 document.getElementById('button-ce').onclick = buttonCE;
+document.getElementById('button-ms').onclick = buttonMS;
+document.getElementById('button-mr').onclick = buttonMR;
+document.getElementById('button-input').onclick = buttonInput;
+document.getElementById('button-history').onclick = buttonHistory;
 
 //--------------
 
