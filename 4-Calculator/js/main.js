@@ -222,7 +222,7 @@ function btnNumber() {
 
 function btnOperator() {
   if (disabled()) return;
-  if (screen === '' && str === '' && document.getElementById('screen').innerHTML !== '') {
+  if (screen === '' && str === '' && document.getElementById('screen').innerHTML !== '' && document.getElementsByClassName('mini-screen')[0].innerHTML === '') {
     screen += document.getElementById('screen').innerHTML;
   }
   if (this.value !== '-' && screen === '') {
@@ -346,11 +346,6 @@ function buttonCE() { // CE
 function btnFun() {
   if (disabled()) return;
   let num = document.getElementById('screen').innerHTML;
-  if (screen === '' && str === '' && num !== '' && !isNaN(parseFloat(num))) {
-    screen += this.value + '(' + num + ')';
-    upDate(this.value);
-    return;
-  }
   if (!isNaN(parseFloat(screen[screen.length - 1]))) {
     alertErr();
     return;
