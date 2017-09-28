@@ -69,28 +69,7 @@ startDrag(oBar, oBox);
 
 //  动画效果 ----------------
 let delay = false;
-/*   ie,edge 不兼容 for of 有点无奈
-for (let dom of document.getElementsByClassName('button-other')) {
-  dom.onmousemove = function(e) {
-    if (delay) {
-      delay = false;
-      return;
-    }
-    let val = Math.ceil((e.offsetX / 94) * 100);
-    this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
-  }
-  dom.onmouseout = function(e) {
-    this.style.background = 'rgb(244, 244, 244)';
-  }
-  dom.onmousedown = function(e) {
-    this.style.background = 'rgb(169, 239, 255)';
-    delay = true;
-  }
-  dom.onmouseup = function(e) {
-    let val = Math.ceil((e.offsetX / 94) * 100);
-    this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
-  }
-} */
+//  ie,edge 不兼容 for of 有点无奈
 let dom_other = document.getElementsByClassName('button-other')
 for (let dom in dom_other) {
   dom_other[dom].onmousemove = function(e) {
@@ -146,139 +125,15 @@ function showScreen(str) {
   miniScreen.scrollLeft = screen.length * 10;
 }
 
-function btnNumber() {
-  if (str.length > 17) return; // 数字长度限制 18
+// -----------------------------
+// 辅助函数
 
-  if (this.value === '0' && str === '') return; // 处理开头0
-
-  if (this.value === '.' && str.indexOf('.') != -1) {
-    alertErr();
-    return;
-  } // 处理多个小数点
-
-  if (this.value === '.' && str === '' && isNaN(parseFloat(screen[screen.length - 1]))) {
-    str += '0';
-    screen += '0';
-  } // 处理开头小数点
-
-  str += this.value;
-  screen += this.value;
-  alertClear();
-  upDate();
-} // 数字键
-
-function btnOperator() {
-  if (screen === '' && str === '' && document.getElementById('screen').innerHTML !== '') {
-    screen += document.getElementById('screen').innerHTML;
+function disabled() {
+  if(!document.getElementsByClassName('mini-screen')[0].disabled){
+    document.getElementsByClassName('mini-screen')[0].focus();
+    document.getElementsByClassName('mini-screen')[0].select();
   }
-  if (this.value !== '-' && screen === '') {
-    alertErr();
-    return;
-  }
-  str = '';
-  screen += this.value;
-  upDate(this.value);
-} // 运算符
-
-function buttonLeft() { // 左括号
-  if (!isNaN(parseInt(screen[screen.length - 1]))) {
-    alertErr();
-    return;
-  }
-  str = '';
-  screen += '(';
-  upDate('(');
-}
-
-function buttonRight() { // 右括号
-  if (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
-    str = '';
-    screen += ')';
-    upDate(')');
-  } else {
-    alertErr();
-  }
-}
-
-function buttonSum() { // 等于号
-  alertClear();
-  let result = sum(screen);
-  if (result !== null) {
-    if (!isNaN(parseFloat(result))) {
-      result = Math.ceil(result * 100000) / 100000;
-    }
-    str = '';
-    let temp = screen + '=';
-    screen = '';
-    upDate(result);
-    showScreen(temp);
-  } else {
-    alertErr();
-  }
-}
-
-function buttonInput() {
-
-}
-
-function buttonHistory() {
-
-}
-
-
-function buttonBack() { // 退格
-
-  if (screen.length > 0) {
-    if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
-    screen = screen.substr(0, screen.length - 1);
-  }
-  upDate();
-  if (str.length > 1) {
-    if (str[str.length - 1] === '.' && str[str.length - 2] === '0') str = str.substr(0, str.length - 1);
-    str = str.substr(0, str.length - 1);
-    /* if (str === '0') { // 处理小数点前的0
-      str = str.substr(0, str.length - 1);
-      screen = screen.substr(0, screen.length - 1);
-    } */
-    upDate();
-  } else if (str.length === 1) {
-    str = '';
-    upDate(0);
-    return;
-  }
-}
-
-function buttonCE() { // CE
-  str = '';
-  screen = '';
-  upDate();
-  document.getElementById('screen').innerHTML = '0';
-}
-
-function btnFun() {
-  let num = document.getElementById('screen').innerHTML;
-  if (screen === '' && str === '' && num !== '' && !isNaN(parseFloat(num))) {
-    screen += this.value + '(' + num + ')';
-    upDate(this.value);
-    return;
-  }
-  if (!isNaN(parseFloat(screen[screen.length - 1]))) {
-    alertErr();
-    return;
-  }
-  screen += this.value + '(';
-  upDate(this.value);
-  str = '';
-}
-
-function buttonMS() {
-  mem = document.getElementById('screen').innerHTML;
-}
-
-function buttonMR() {
-  str = mem;
-  screen += mem;
-  upDate();
+  return !document.getElementsByClassName('mini-screen')[0].disabled;
 }
 
 function findInStr(str, char) {
@@ -306,16 +161,306 @@ function sum(str) {
     let arr = str.match(reg);
     str = str.replace(reg, 'Math.pow(' + arr[1] + ',' + arr[2] + ')');
   }
-  console.log(str);
   try {
     let result = eval(str);
-    if (isNaN(result)) {
-      return null;
-    } else {
-      return result;
-    }
+    return result;
   } catch (e) {
     return null;
+  }
+}
+
+function braceMatching(str) { // 括号匹配
+  let stack = [];
+  for (let i = 0; i < str.length; i++) {
+    switch (str[i]) {
+      case '(':
+        stack.push('(');
+        break;
+      case ')':
+        if (stack.length > 0 && stack[stack.length - 1] == '(') {
+          stack.pop();
+        } else {
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  if (stack.length !== 0) return false;
+  return true;
+}
+
+// -----------------------------
+// 按钮事件
+function btnNumber() {
+  if(disabled())return;
+  if (str.length > 17) return; // 数字长度限制 18
+
+  if (this.value === '0' && str === '') return; // 处理开头0
+
+  if (this.value === '.' && str.indexOf('.') != -1) {
+    alertErr();
+    return;
+  } // 处理多个小数点
+
+  if (this.value === '.' && str === '' && isNaN(parseFloat(screen[screen.length - 1]))) {
+    str += '0';
+    screen += '0';
+  } // 处理开头小数点
+
+  str += this.value;
+  screen += this.value;
+  alertClear();
+  upDate();
+} // 数字键
+
+function btnOperator() {
+  if(disabled())return;
+  if (screen === '' && str === '' && document.getElementById('screen').innerHTML !== '') {
+    screen += document.getElementById('screen').innerHTML;
+  }
+  if (this.value !== '-' && screen === '') {
+    alertErr();
+    return;
+  }
+  str = '';
+  screen += this.value;
+  upDate(this.value);
+} // 运算符
+
+function buttonLeft() { // 左括号
+  if(disabled())return;
+  if (!isNaN(parseInt(screen[screen.length - 1]))) {
+    alertErr();
+    return;
+  }
+  str = '';
+  screen += '(';
+  upDate('(');
+}
+
+function buttonRight() { // 右括号
+  if(disabled())return;
+  if (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
+    str = '';
+    screen += ')';
+    upDate(')');
+  } else {
+    alertErr();
+  }
+}
+
+Math.formatFloat = function(f, digit) { 
+  var m = Math.pow(10, digit); 
+  return parseInt(f * m, 10) / m; 
+} 
+
+
+function buttonSum() { // 等于号
+  if(disabled())return;
+  alertClear();
+  let result = sum(screen);
+  if (result !== null) {
+    if (!isNaN(parseFloat(result))) {
+      result = Math.formatFloat(result, 10); // 修正计算精度问题
+    }
+    str = '';
+    let temp = screen + '=';
+    screen = '';
+    upDate(result);
+    showScreen(temp);
+  } else {
+    alertErr();
+  }
+}
+
+function buttonInput() {
+  if(document.getElementsByClassName('mini-screen')[0].disabled){
+    document.getElementsByClassName('mini-screen')[0].disabled = false;
+    document.getElementsByClassName('mini-screen')[0].focus();
+    document.getElementsByClassName('mini-screen')[0].select();
+    document.getElementById('button-input').innerHTML = 'OK';
+  } else {
+    document.getElementsByClassName('mini-screen')[0].disabled = true;
+    screen = document.getElementsByClassName('mini-screen')[0].value;
+    if(screen === '') return;
+    if(screen[screen.length - 1] === '=') screen = screen.substr(0, screen.length - 1);
+    buttonSum();
+    document.getElementById('button-input').innerHTML = 'Input';
+  }
+}
+
+let showHistory = false;
+function buttonHistory() {
+  if(showHistory){
+    document.getElementsByClassName('history')[0].style = 'width: 0px; height: 0px; opacity: 0;transition: all .2s ease .1s;'
+    document.getElementsByClassName('container')[0].style = 'width: 500px;'
+    document.getElementsByClassName('detail')[0].style = 'height:0px;'
+  } else {
+    document.getElementsByClassName('container')[0].style = 'width: 800px;'
+    document.getElementsByClassName('history')[0].style = 'width: 280px; height: 380px; opacity: 1;transition: all .2s ease .5s;'
+    document.getElementsByClassName('detail')[0].style = 'height:330px;'
+  }
+  showHistory = !showHistory;
+}
+
+
+function buttonBack() { // 退格
+  if(disabled())return;
+  if (screen.length > 0) {
+    if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
+    screen = screen.substr(0, screen.length - 1);
+  }
+  upDate();
+  if (str.length > 1) {
+    if (str[str.length - 1] === '.' && str[str.length - 2] === '0') str = str.substr(0, str.length - 1);
+    str = str.substr(0, str.length - 1);
+    upDate();
+  } else if (str.length === 1) {
+    str = '';
+    upDate(0);
+    return;
+  }
+}
+
+function buttonCE() { // CE
+  str = '';
+  screen = '';
+  upDate();
+  document.getElementById('screen').innerHTML = '0';
+}
+
+function btnFun() {
+  if(disabled())return;
+  let num = document.getElementById('screen').innerHTML;
+  if (screen === '' && str === '' && num !== '' && !isNaN(parseFloat(num))) {
+    screen += this.value + '(' + num + ')';
+    upDate(this.value);
+    return;
+  }
+  if (!isNaN(parseFloat(screen[screen.length - 1]))) {
+    alertErr();
+    return;
+  }
+  screen += this.value + '(';
+  upDate(this.value);
+  str = '';
+}
+
+function buttonMS() {
+  if(disabled())return;
+  mem = document.getElementById('screen').innerHTML;
+}
+
+function buttonMR() {
+  if(disabled())return;
+  str = mem;
+  screen += mem;
+  upDate();
+}
+// 绑定事件---------
+let dom_num = document.getElementsByClassName('button-num');
+for (let i in dom_num) {
+  dom_num[i].onclick = btnNumber;
+}
+let dom_operator = document.getElementsByClassName('button-operator');
+for (let i in dom_operator) {
+  dom_operator[i].onclick = btnOperator;
+}
+let dom_fun = document.getElementsByClassName('button-fun');
+for (let i in dom_fun) {
+  dom_fun[i].onclick = btnFun;
+}
+
+document.getElementsByClassName('notice')[0].onclick = alertClear;
+document.getElementById('button-left').onclick = buttonLeft;
+document.getElementById('button-right').onclick = buttonRight;
+document.getElementById('button-sum').onclick = buttonSum;
+document.getElementById('button-back').onclick = buttonBack;
+document.getElementById('button-ce').onclick = buttonCE;
+document.getElementById('button-ms').onclick = buttonMS;
+document.getElementById('button-mr').onclick = buttonMR;
+document.getElementById('button-input').onclick = buttonInput;
+document.getElementById('button-history').onclick = buttonHistory;
+
+//--------------
+
+// 绑定按钮
+document.onkeyup = function(event) {
+  if(!document.getElementsByClassName('mini-screen')[0].disabled) return;
+  var e = event || window.event;
+  var keyCode = e.keyCode || e.which;
+  switch (keyCode) {
+    case 49:
+    case 97:
+      document.getElementById('btn_1').click();
+      break;
+    case 50:
+    case 98:
+      document.getElementById('btn_2').click();
+      break;
+    case 51:
+    case 99:
+      document.getElementById('btn_3').click();
+      break;
+    case 52:
+    case 100:
+      document.getElementById('btn_4').click();
+      break;
+    case 53:
+    case 101:
+      document.getElementById('btn_5').click();
+      break;
+    case 54:
+    case 102:
+      document.getElementById('btn_6').click();
+      break;
+    case 55:
+    case 103:
+      document.getElementById('btn_7').click();
+      break;
+    case 56:
+    case 104:
+      document.getElementById('btn_8').click();
+      break;
+    case 57:
+    case 105:
+      document.getElementById('btn_9').click();
+      break;
+    case 48:
+    case 96:
+      document.getElementById('btn_0').click();
+      break;
+    case 110:
+      document.getElementById('btn_point').click();
+      break;
+    case 219:
+      document.getElementById('button-left').click();
+      break;
+    case 221:
+      document.getElementById('button-right').click();
+      break;
+    case 107:
+      document.getElementById('btn_plus').click();
+      break;
+    case 109:
+      document.getElementById('btn_reduce').click();
+      break;
+    case 106:
+      document.getElementById('btn_x').click();
+      break;
+    case 111:
+      document.getElementById('btn_division').click();
+      break;
+    case 13:
+      document.getElementById('button-sum').click();
+      break;
+    case 8:
+      document.getElementById('button-back').click();
+      break;
+    default:
+      break;
   }
 }
 
@@ -414,138 +559,3 @@ function sum(str) {
   // 计算逆波兰算式结果
 }
  */
-function braceMatching(str) { // 括号匹配
-  let stack = [];
-  for (let i = 0; i < str.length; i++) {
-    switch (str[i]) {
-      case '(':
-        stack.push('(');
-        break;
-      case ')':
-        if (stack.length > 0 && stack[stack.length - 1] == '(') {
-          stack.pop();
-        } else {
-          return false;
-        }
-        break;
-      default:
-        break;
-    }
-  }
-  if (stack.length !== 0) return false;
-  return true;
-}
-
-// 绑定事件---------
-/*  es6 ie edge 不能运行
-for (let dom of document.getElementsByClassName('button-num')) {
-  dom.onclick = btnNumber;
-}
-
-for (let dom of document.getElementsByClassName('button-operator')) {
-  dom.onclick = btnOperator;
-}
- */
-let dom_num = document.getElementsByClassName('button-num');
-for (let i in dom_num) {
-  dom_num[i].onclick = btnNumber;
-}
-let dom_operator = document.getElementsByClassName('button-operator');
-for (let i in dom_operator) {
-  dom_operator[i].onclick = btnOperator;
-}
-let dom_fun = document.getElementsByClassName('button-fun');
-for (let i in dom_fun) {
-  dom_fun[i].onclick = btnFun;
-}
-
-document.getElementsByClassName('notice')[0].onclick = alertClear;
-document.getElementById('button-left').onclick = buttonLeft;
-document.getElementById('button-right').onclick = buttonRight;
-document.getElementById('button-sum').onclick = buttonSum;
-document.getElementById('button-back').onclick = buttonBack;
-document.getElementById('button-ce').onclick = buttonCE;
-document.getElementById('button-ms').onclick = buttonMS;
-document.getElementById('button-mr').onclick = buttonMR;
-document.getElementById('button-input').onclick = buttonInput;
-document.getElementById('button-history').onclick = buttonHistory;
-
-//--------------
-
-// 绑定按钮
-document.onkeyup = function(event) {
-  var e = event || window.event;
-  var keyCode = e.keyCode || e.which;
-  switch (keyCode) {
-    case 49:
-    case 97:
-      document.getElementById('btn_1').click();
-      break;
-    case 50:
-    case 98:
-      document.getElementById('btn_2').click();
-      break;
-    case 51:
-    case 99:
-      document.getElementById('btn_3').click();
-      break;
-    case 52:
-    case 100:
-      document.getElementById('btn_4').click();
-      break;
-    case 53:
-    case 101:
-      document.getElementById('btn_5').click();
-      break;
-    case 54:
-    case 102:
-      document.getElementById('btn_6').click();
-      break;
-    case 55:
-    case 103:
-      document.getElementById('btn_7').click();
-      break;
-    case 56:
-    case 104:
-      document.getElementById('btn_8').click();
-      break;
-    case 57:
-    case 105:
-      document.getElementById('btn_9').click();
-      break;
-    case 48:
-    case 96:
-      document.getElementById('btn_0').click();
-      break;
-    case 110:
-      document.getElementById('btn_point').click();
-      break;
-    case 219:
-      document.getElementById('button-left').click();
-      break;
-    case 221:
-      document.getElementById('button-right').click();
-      break;
-    case 107:
-      document.getElementById('btn_plus').click();
-      break;
-    case 109:
-      document.getElementById('btn_reduce').click();
-      break;
-    case 106:
-      document.getElementById('btn_x').click();
-      break;
-    case 111:
-      document.getElementById('btn_division').click();
-      break;
-    case 187:
-    case 13:
-      document.getElementById('button-sum').click();
-      break;
-    case 8:
-      document.getElementById('button-back').click();
-      break;
-    default:
-      break;
-  }
-}
