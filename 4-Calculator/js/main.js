@@ -61,8 +61,9 @@ let startDrag = function(bar, target, callback) {
   }
 };
 
+let oBar = document.getElementById('my-title');
 let oBox = document.getElementsByClassName('container')[0];
-let oBar = document.getElementsByClassName('all-container')[0];
+
 startDrag(oBar, oBox);
 // ---------------------
 
@@ -129,7 +130,7 @@ function showScreen(str) {
 // 辅助函数
 
 function disabled() {
-  if(!document.getElementsByClassName('mini-screen')[0].disabled){
+  if (!document.getElementsByClassName('mini-screen')[0].disabled) {
     document.getElementsByClassName('mini-screen')[0].focus();
     document.getElementsByClassName('mini-screen')[0].select();
   }
@@ -191,13 +192,17 @@ function braceMatching(str) { // 括号匹配
   return true;
 }
 
+function addHistory(exp, res) {
+  document.getElementsByClassName('detail')[0].innerHTML = '<p class="express">' + exp + '</p><p class="result">' + res + '</p>' + document.getElementsByClassName('detail')[0].innerHTML
+}
+
 // -----------------------------
 // 按钮事件
 function btnNumber() {
-  if(disabled())return;
+  if (disabled()) return;
   if (str.length > 17) return; // 数字长度限制 18
 
-  if (this.value === '0' && str === '') return; // 处理开头0
+  // if (this.value === '0' && str === '') return; // 处理开头0
 
   if (this.value === '.' && str.indexOf('.') != -1) {
     alertErr();
@@ -216,7 +221,7 @@ function btnNumber() {
 } // 数字键
 
 function btnOperator() {
-  if(disabled())return;
+  if (disabled()) return;
   if (screen === '' && str === '' && document.getElementById('screen').innerHTML !== '') {
     screen += document.getElementById('screen').innerHTML;
   }
@@ -230,7 +235,7 @@ function btnOperator() {
 } // 运算符
 
 function buttonLeft() { // 左括号
-  if(disabled())return;
+  if (disabled()) return;
   if (!isNaN(parseInt(screen[screen.length - 1]))) {
     alertErr();
     return;
@@ -241,7 +246,7 @@ function buttonLeft() { // 左括号
 }
 
 function buttonRight() { // 右括号
-  if(disabled())return;
+  if (disabled()) return;
   if (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
     str = '';
     screen += ')';
@@ -251,14 +256,14 @@ function buttonRight() { // 右括号
   }
 }
 
-Math.formatFloat = function(f, digit) { 
-  var m = Math.pow(10, digit); 
-  return parseInt(f * m, 10) / m; 
-} 
+Math.formatFloat = function(f, digit) {
+  var m = Math.pow(10, digit);
+  return parseInt(f * m, 10) / m;
+}
 
 
 function buttonSum() { // 等于号
-  if(disabled())return;
+  if (disabled()) return;
   alertClear();
   let result = sum(screen);
   if (result !== null) {
@@ -270,13 +275,18 @@ function buttonSum() { // 等于号
     screen = '';
     upDate(result);
     showScreen(temp);
+    addHistory(temp, result);
   } else {
     alertErr();
   }
 }
 
+function buttonClear() {
+  document.getElementsByClassName('detail')[0].innerHTML = '';
+}
+
 function buttonInput() {
-  if(document.getElementsByClassName('mini-screen')[0].disabled){
+  if (document.getElementsByClassName('mini-screen')[0].disabled) {
     document.getElementsByClassName('mini-screen')[0].disabled = false;
     document.getElementsByClassName('mini-screen')[0].focus();
     document.getElementsByClassName('mini-screen')[0].select();
@@ -284,30 +294,32 @@ function buttonInput() {
   } else {
     document.getElementsByClassName('mini-screen')[0].disabled = true;
     screen = document.getElementsByClassName('mini-screen')[0].value;
-    if(screen === '') return;
-    if(screen[screen.length - 1] === '=') screen = screen.substr(0, screen.length - 1);
+    if (screen === '') return;
+    if (screen[screen.length - 1] === '=') screen = screen.substr(0, screen.length - 1);
     buttonSum();
     document.getElementById('button-input').innerHTML = 'Input';
   }
 }
 
 let showHistory = false;
+document.getElementsByClassName('container')[0].style = 'width: 500px';
+
 function buttonHistory() {
-  if(showHistory){
+  if (showHistory) {
     document.getElementsByClassName('history')[0].style = 'width: 0px; height: 0px; opacity: 0;transition: all .2s ease .1s;'
-    document.getElementsByClassName('container')[0].style = 'width: 500px;'
-    document.getElementsByClassName('detail')[0].style = 'height:0px;'
+    document.getElementsByClassName('container')[0].style.width = '500px';
+    document.getElementsByClassName('detail')[0].style.height = '0px'
   } else {
-    document.getElementsByClassName('container')[0].style = 'width: 800px;'
+    document.getElementsByClassName('container')[0].style.width = '800px';
     document.getElementsByClassName('history')[0].style = 'width: 280px; height: 380px; opacity: 1;transition: all .2s ease .5s;'
-    document.getElementsByClassName('detail')[0].style = 'height:330px;'
+    document.getElementsByClassName('detail')[0].style.height = '330px'
   }
   showHistory = !showHistory;
 }
 
 
 function buttonBack() { // 退格
-  if(disabled())return;
+  if (disabled()) return;
   if (screen.length > 0) {
     if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
     screen = screen.substr(0, screen.length - 1);
@@ -332,7 +344,7 @@ function buttonCE() { // CE
 }
 
 function btnFun() {
-  if(disabled())return;
+  if (disabled()) return;
   let num = document.getElementById('screen').innerHTML;
   if (screen === '' && str === '' && num !== '' && !isNaN(parseFloat(num))) {
     screen += this.value + '(' + num + ')';
@@ -349,12 +361,12 @@ function btnFun() {
 }
 
 function buttonMS() {
-  if(disabled())return;
+  if (disabled()) return;
   mem = document.getElementById('screen').innerHTML;
 }
 
 function buttonMR() {
-  if(disabled())return;
+  if (disabled()) return;
   str = mem;
   screen += mem;
   upDate();
@@ -383,12 +395,13 @@ document.getElementById('button-ms').onclick = buttonMS;
 document.getElementById('button-mr').onclick = buttonMR;
 document.getElementById('button-input').onclick = buttonInput;
 document.getElementById('button-history').onclick = buttonHistory;
+document.getElementById('button-clear').onclick = buttonClear;
 
 //--------------
 
 // 绑定按钮
 document.onkeyup = function(event) {
-  if(!document.getElementsByClassName('mini-screen')[0].disabled) return;
+  if (!document.getElementsByClassName('mini-screen')[0].disabled) return;
   var e = event || window.event;
   var keyCode = e.keyCode || e.which;
   switch (keyCode) {
