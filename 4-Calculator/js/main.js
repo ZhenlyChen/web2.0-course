@@ -302,17 +302,17 @@ function buttonInput() {
 }
 
 let showHistory = false;
-document.getElementsByClassName('container')[0].style = 'width: 500px';
+document.getElementsByClassName('container')[0].style = 'width: 496px';
 
 function buttonHistory() {
   if (showHistory) {
     document.getElementsByClassName('history')[0].style = 'width: 0px; height: 0px; opacity: 0;transition: all .2s ease .1s;'
-    document.getElementsByClassName('container')[0].style.width = '500px';
-    document.getElementsByClassName('detail')[0].style.height = '0px'
+    document.getElementsByClassName('container')[0].style.width = '496px';
+    document.getElementsByClassName('detail')[0].style.height = '0px';
   } else {
     document.getElementsByClassName('container')[0].style.width = '800px';
     document.getElementsByClassName('history')[0].style = 'width: 280px; height: 380px; opacity: 1;transition: all .2s ease .5s;'
-    document.getElementsByClassName('detail')[0].style.height = '330px'
+    document.getElementsByClassName('detail')[0].style.height = '330px';
   }
   showHistory = !showHistory;
 }

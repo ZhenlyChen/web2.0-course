@@ -111,6 +111,7 @@
       background-image: url("./assets/images/signin.png"); }
 
 #info-bar {
+  overflow: hidden;
   height: 10px;
   width: 10px;
   border-radius: 100px;
