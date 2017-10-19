@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="all-container">
+    <div class="icon">
+      <p>Calculator</p>
+    </div>
+    <div class="container">
+      <h1>Calculator</h1>
+      <p class="notice">输入格式错误</p>
+      <button class="button-close">X</button>
+      <input type="text" class="screen mini-screen" value="" disabled>
+      <p type="text" class="screen" id="screen">0</p>
+      <div class="button-box">
+        <button id="btn_7" class="button-num" value="7">7</button><button id="btn_8" class="button-num" value="8">8</button><button id="btn_9" class="button-num" value="9">9</button><button id="btn_division" class="button-other button-operator" value="/">/</button>
+        <button id="btn_4" class="button-num" value="4">4</button><button id="btn_5" class="button-num" value="5">5</button><button id="btn_6" class="button-num" value="6">6</button><button id="btn_x" class="button-other button-operator" value="*">*</button>
+        <button id="btn_1" class="button-num" value="1">1</button><button id="btn_2" class="button-num" value="2">2</button><button id="btn_3" class="button-num" value="3">3</button><button id="btn_reduce" class="button-other button-operator" value="-">-</button>
+        <button id="btn_0" class="button-num" value="0">0</button><button id="btn_point" class="button-num" value=".">.</button><button class="button-other" id="button-back">←</button><button id="btn_plus" class="button-other button-operator" value="+">+</button>
+        <button class="button-other" id="button-left">(</button><button class="button-other" id="button-right">)</button><button class="button-other" id="button-ce">CE</button><button class="button-other" id="button-sum">=</button>
+      </div>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
