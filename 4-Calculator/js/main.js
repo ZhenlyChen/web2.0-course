@@ -290,7 +290,7 @@ function buttonSum() { // 等于号
     buttonRight();
   }
   reg = /0+([0-9]+)/;
-  while (reg.test(screen)) {
+  while (reg.test(screen) && screen[screen.match(reg).index - 1] !== '.') {
     screen = screen.replace(reg, screen.match(reg)[1]);
   }
   upDate();
