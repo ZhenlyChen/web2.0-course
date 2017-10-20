@@ -276,7 +276,7 @@ function buttonRight() { // 右括号
 
 Math.formatFloat = function(f, digit) {
   var m = Math.pow(10, digit);
-  return parseInt(f * m, 10) / m;
+  return parseInt(Math.round(f * m, 10)) / m;
 };
 
 function buttonSum() { // 等于号
