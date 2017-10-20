@@ -289,9 +289,10 @@ function buttonSum() { // 等于号
   while (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
     buttonRight();
   }
-  reg = /0+([0-9]+)/;
-  while (reg.test(screen) && screen[screen.match(reg).index - 1] !== '.') {
-    screen = screen.replace(reg, screen.match(reg)[1]);
+  reg = /([\(\^\+\-\*\/])0+([0-9]+)/
+
+  while (reg.test(screen)) {
+    screen = screen.replace(reg, screen.match(reg)[1] + screen.match(reg)[2]);
   }
   upDate();
   let result = sum(screen);
