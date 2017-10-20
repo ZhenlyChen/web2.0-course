@@ -168,12 +168,12 @@ function safeCheck(str) {
 
 function sum(str) {
   if (!braceMatching(str)) return null;
-  str = str.replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos').replace(/tan/g, 'Math.tan').replace(/ln/g, 'Math.log').replace(/sqrt/g, 'Math.sqrt');
-  let reg = /([0-9.]*)\^([0-9.]*)/;
-  while (reg.test(str)) {
-    let arr = str.match(reg);
-    str = str.replace(reg, 'Math.pow(' + arr[1] + ',' + arr[2] + ')');
-  }
+  str = str.replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos').replace(/tan/g, 'Math.tan').replace(/ln/g, 'Math.log').replace(/sqrt/g, 'Math.sqrt').replace(/\^/g, '**');
+  /*   let reg = /([0-9.]*)\^([0-9.]*)/;
+    while (reg.test(str)) {
+      let arr = str.match(reg);
+      str = str.replace(reg, 'Math.pow(' + arr[1] + ',' + arr[2] + ')');
+    } */
   try {
     let result = eval(str);
     return result;
@@ -243,6 +243,10 @@ function btnOperator() {
     return;
   }
   let lastOne = screen[screen.length - 1];
+  if (lastOne === '+' || lastOne === '-' || lastOne === '*' || lastOne === '/' || lastOne === '^') {
+    screen = screen.substr(0, screen.length - 1);
+    lastOne = screen[screen.length - 1];
+  }
   if (!isNaN(parseInt(lastOne)) || lastOne === ')') {
     str = '';
     screen += this.value;
