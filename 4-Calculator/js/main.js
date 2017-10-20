@@ -133,6 +133,7 @@ function disabled() {
   if (!document.getElementsByClassName('mini-screen')[0].disabled) {
     document.getElementsByClassName('mini-screen')[0].focus();
     document.getElementsByClassName('mini-screen')[0].select();
+    alertErr('请按OK后再继续');
   }
   return !document.getElementsByClassName('mini-screen')[0].disabled;
 }
@@ -141,7 +142,9 @@ function findInStr(str, char) {
   return (str.split(char)).length - 1;
 }
 
-function alertErr() {
+function alertErr(str) {
+  if (str === undefined) str = '输入格式错误';
+  document.getElementsByClassName('notice')[0].innerHTML = str;
   document.getElementsByClassName('notice')[0].style.display = 'inline';
   setTimeout(function() {
     if (document.getElementsByClassName('notice')[0].style.display == 'inline') {
@@ -153,6 +156,15 @@ function alertErr() {
 function alertClear() {
   document.getElementsByClassName('notice')[0].style.display = 'none';
 } // 关闭提示
+
+
+function safeCheck(str) {
+  if (str.indexOf('//') != -1) return 0;
+  str = str.replace(/sin/g, '').replace(/cos/g, '').replace(/tan/g, '').replace(/ln/g, '').replace(/sqrt/g, '');
+  let reg = /^[0-9.\+\-\*\/\(\)\^]*$/;
+  return reg.test(str);
+}
+
 
 function sum(str) {
   if (!braceMatching(str)) return null;
@@ -196,11 +208,12 @@ function addHistory(exp, res) {
   document.getElementsByClassName('detail')[0].innerHTML = '<p class="express">' + exp + '</p><p class="result">' + res + '</p>' + document.getElementsByClassName('detail')[0].innerHTML
 }
 
+
 // -----------------------------
 // 按钮事件
 function btnNumber() {
   if (disabled()) return;
-  if (str.length > 17) return; // 数字长度限制 18
+  if (str.length > 13) return; // 数字长度限制 18
 
   // if (this.value === '0' && str === '') return; // 处理开头0
 
@@ -229,9 +242,14 @@ function btnOperator() {
     alertErr();
     return;
   }
-  str = '';
-  screen += this.value;
-  upDate(this.value);
+  let lastOne = screen[screen.length - 1];
+  if (!isNaN(parseInt(lastOne)) || lastOne === ')') {
+    str = '';
+    screen += this.value;
+    upDate(this.value);
+  } else {
+    alertErr();
+  }
 } // 运算符
 
 function buttonLeft() { // 左括号
@@ -259,16 +277,22 @@ function buttonRight() { // 右括号
 Math.formatFloat = function(f, digit) {
   var m = Math.pow(10, digit);
   return parseInt(f * m, 10) / m;
-}
-
+};
 
 function buttonSum() { // 等于号
   if (disabled()) return;
   alertClear();
+  if (!safeCheck(screen)) {
+    alertErr();
+    return;
+  }
+  while (findInStr(screen, '(') - findInStr(screen, ')') > 0) {
+    buttonRight();
+  }
   let result = sum(screen);
   if (result !== null) {
-    if (!isNaN(parseFloat(result))) {
-      result = Math.formatFloat(result, 10); // 修正计算精度问题
+    if (!isNaN(parseFloat(result)) && result.toString().indexOf('e') === -1) {
+      result = Math.formatFloat(result, 6); // 修正计算精度问题
     }
     str = '';
     let temp = screen + '=';
@@ -294,10 +318,10 @@ function buttonInput() {
   } else {
     document.getElementsByClassName('mini-screen')[0].disabled = true;
     screen = document.getElementsByClassName('mini-screen')[0].value;
+    document.getElementById('button-input').innerHTML = 'Input';
     if (screen === '') return;
     if (screen[screen.length - 1] === '=') screen = screen.substr(0, screen.length - 1);
     buttonSum();
-    document.getElementById('button-input').innerHTML = 'Input';
   }
 }
 
@@ -322,11 +346,22 @@ function buttonBack() { // 退格
   if (disabled()) return;
   if (screen.length > 0) {
     if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
+    if (screen.indexOf('cos(') === screen.length - 4) screen = screen.substr(0, screen.length - 3);
+    if (screen.indexOf('sin(') === screen.length - 4) screen = screen.substr(0, screen.length - 3);
+    if (screen.indexOf('tan(') === screen.length - 4) screen = screen.substr(0, screen.length - 3);
+    if (screen.indexOf('sqrt(') === screen.length - 5) screen = screen.substr(0, screen.length - 4);
+    if (screen.indexOf('ln(') === screen.length - 3) screen = screen.substr(0, screen.length - 2);
     screen = screen.substr(0, screen.length - 1);
   }
   upDate();
+
   if (str.length > 1) {
     if (str[str.length - 1] === '.' && str[str.length - 2] === '0') str = str.substr(0, str.length - 1);
+    if (str.indexOf('cos(') === str.length - 4) str = str.substr(0, str.length - 3);
+    if (str.indexOf('sin(') === str.length - 4) str = str.substr(0, str.length - 3);
+    if (str.indexOf('tan(') === str.length - 4) str = str.substr(0, str.length - 3);
+    if (str.indexOf('sqrt(') === str.length - 5) str = str.substr(0, str.length - 4);
+    if (str.indexOf('ln(') === str.length - 3) str = str.substr(0, str.length - 2);
     str = str.substr(0, str.length - 1);
     upDate();
   } else if (str.length === 1) {
