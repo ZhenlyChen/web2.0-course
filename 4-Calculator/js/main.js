@@ -71,6 +71,16 @@ startDrag(oBar, oBox);
 //  动画效果 ----------------
 let delay = false;
 //  ie,edge 不兼容 for of 有点无奈
+//-------------------------------------------------------
+//
+//
+// 这个没办法写在css里面，因为是要根据鼠标事件做出响应的！
+// 这个没办法写在css里面，因为是要根据鼠标事件做出响应的！
+// 这个没办法写在css里面，因为是要根据鼠标事件做出响应的！
+//
+//
+//
+//-----------------------------------------------------
 let dom_other = document.getElementsByClassName('button-other')
 for (let dom in dom_other) {
   dom_other[dom].onmousemove = function(e) {
@@ -93,19 +103,6 @@ for (let dom in dom_other) {
     this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
   }
 }
-
-document.getElementsByClassName('button-close')[0].onclick = function(e) {
-  document.getElementsByClassName('container')[0].style.display = 'none';
-  document.getElementsByClassName('icon')[0].style.display = 'inline';
-  buttonCE();
-}
-
-document.getElementsByClassName('icon')[0].onclick = function(e) {
-  document.getElementsByClassName('icon')[0].style.display = 'none';
-  document.getElementsByClassName('container')[0].style.display = 'inline';
-  buttonCE();
-}
-
 
 // ----------------------
 let str = ''; // 大屏幕
@@ -205,7 +202,7 @@ function braceMatching(str) { // 括号匹配
 }
 
 function addHistory(exp, res) {
-  document.getElementsByClassName('detail')[0].innerHTML = '<p class="express">' + exp + '</p><p class="result">' + res + '</p>' + document.getElementsByClassName('detail')[0].innerHTML
+  document.getElementsByClassName('detail')[0].innerHTML = '<p class="express">' + exp + '</p><p class="result">' + res + '</p>' + document.getElementsByClassName('detail')[0].innerHTML;
 }
 
 
@@ -336,17 +333,14 @@ function buttonInput() {
 }
 
 let showHistory = false;
-document.getElementsByClassName('container')[0].style = 'width: 496px';
 
 function buttonHistory() {
   if (showHistory) {
-    document.getElementsByClassName('history')[0].style = 'width: 0px; height: 0px; opacity: 0;transition: all .2s ease .1s;'
-    document.getElementsByClassName('container')[0].style.width = '496px';
-    document.getElementsByClassName('detail')[0].style.height = '0px';
+    document.getElementsByClassName('history-open')[0].setAttribute('class', 'history');
+    document.getElementsByClassName('container')[0].setAttribute('class', 'container short-width-container');
   } else {
-    document.getElementsByClassName('container')[0].style.width = '800px';
-    document.getElementsByClassName('history')[0].style = 'width: 280px; height: 380px; opacity: 1;transition: all .2s ease .5s;'
-    document.getElementsByClassName('detail')[0].style.height = '330px';
+    document.getElementsByClassName('container')[0].setAttribute('class', 'container long-width-container');
+    document.getElementsByClassName('history')[0].setAttribute('class', 'history-open');
   }
   showHistory = !showHistory;
 }
@@ -414,6 +408,18 @@ function buttonMR() {
   upDate();
 }
 // 绑定事件---------
+document.getElementsByClassName('button-close')[0].onclick = function(e) {
+  document.getElementsByClassName('container')[0].style.display = 'none';
+  document.getElementsByClassName('icon')[0].style.display = 'inline';
+  buttonCE();
+}
+
+document.getElementsByClassName('icon')[0].onclick = function(e) {
+  document.getElementsByClassName('icon')[0].style.display = 'none';
+  document.getElementsByClassName('container')[0].style.display = 'inline';
+  buttonCE();
+}
+
 let dom_num = document.getElementsByClassName('button-num');
 for (let i in dom_num) {
   dom_num[i].onclick = btnNumber;

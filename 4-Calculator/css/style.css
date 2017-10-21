@@ -18,6 +18,14 @@ body {
   border-radius: 1px;
 }
 
+.short-width-container {
+  width: 496px;
+}
+
+.long-width-container {
+  width: 800px;
+}
+
 .container h1 {
   text-align: left;
   font-size: 11px;
@@ -150,13 +158,23 @@ body {
   width: 0px;
   height: 0px;
   opacity: 0;
+  text-align: left;
+  padding-right: 10px;
+  padding-left: 5px;
+}
+
+.history-open {
+  float: right;
+  width: 280px;
+  height: 380px;
+  opacity: 1;
   transition: all .2s ease .5s;
   text-align: left;
   padding-right: 10px;
   padding-left: 5px;
 }
 
-.history>p {
+.history-open .history-open>p {
   position: fixed;
   width: 300px;
 }
@@ -171,7 +189,6 @@ body {
 }
 
 .detail {
-  margin-top: 50px;
   text-align: right;
   overflow: auto;
 }
@@ -184,12 +201,12 @@ body {
   margin-left: 50px;
 }
 
-.history>p>a {
+.history-open>p>a {
   text-decoration: none;
   color: #000;
 }
 
-.history>p>a:hover {
+.history-open>p>a:hover {
   text-decoration: none;
   color: rgb(0, 153, 188);
 }

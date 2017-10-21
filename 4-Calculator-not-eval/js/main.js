@@ -91,6 +91,17 @@ for (let dom of document.getElementsByClassName('button-other')) {
     this.style.background = 'linear-gradient(to right, rgb(119,201,219) 0%, rgb(145,217,233) ' + (val + 5) + '%, rgb(145,217,233) ' + (val - 5) + '%, rgb(119,201,219) 100%)';
   }
 } */
+
+//-------------------------------------------------------
+//
+//
+// 这个没办法写在css里面，因为是要根据鼠标事件做出响应的！
+// 这个没办法写在css里面，因为是要根据鼠标事件做出响应的！
+// 这个没办法写在css里面，因为是要根据鼠标事件做出响应的！
+//
+//
+//
+//-----------------------------------------------------
 let dom_other = document.getElementsByClassName('button-other')
 for (let dom in dom_other) {
   dom_other[dom].onmousemove = function(e) {
