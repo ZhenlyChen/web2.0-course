@@ -295,6 +295,10 @@ function buttonSum() { // 等于号
   while (reg.test(screen)) {
     screen = screen.replace(reg, screen.match(reg)[1] + screen.match(reg)[2]);
   }
+  reg = /^0+([0-9]+)/
+  if (reg.test(screen)) {
+    screen = screen.replace(reg, screen.match(reg)[1]);
+  }
   upDate();
   let result = sum(screen);
   if (result !== null) {
