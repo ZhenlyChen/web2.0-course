@@ -356,22 +356,24 @@ function buttonBack() { // 退格
   if (disabled()) return;
   if (screen.length > 0) {
     if (screen[screen.length - 1] === '.' && screen[screen.length - 2] === '0') screen = screen.substr(0, screen.length - 1);
-    if (screen.indexOf('cos(') === screen.length - 4) screen = screen.substr(0, screen.length - 3);
-    if (screen.indexOf('sin(') === screen.length - 4) screen = screen.substr(0, screen.length - 3);
-    if (screen.indexOf('tan(') === screen.length - 4) screen = screen.substr(0, screen.length - 3);
-    if (screen.indexOf('sqrt(') === screen.length - 5) screen = screen.substr(0, screen.length - 4);
-    if (screen.indexOf('ln(') === screen.length - 3) screen = screen.substr(0, screen.length - 2);
+    if (screen.length >= 4 &&
+      (screen.indexOf('cos(') === screen.length - 4 ||
+        screen.indexOf('sin(') === screen.length - 4 ||
+        screen.indexOf('tan(') === screen.length - 4)) screen = screen.substr(0, screen.length - 3);
+    if (screen.length >= 5 && screen.indexOf('sqrt(') === screen.length - 5) screen = screen.substr(0, screen.length - 4);
+    if (screen.length >= 3 && screen.indexOf('ln(') === screen.length - 3) screen = screen.substr(0, screen.length - 2);
     screen = screen.substr(0, screen.length - 1);
   }
   upDate();
 
   if (str.length > 1) {
     if (str[str.length - 1] === '.' && str[str.length - 2] === '0') str = str.substr(0, str.length - 1);
-    if (str.indexOf('cos(') === str.length - 4) str = str.substr(0, str.length - 3);
-    if (str.indexOf('sin(') === str.length - 4) str = str.substr(0, str.length - 3);
-    if (str.indexOf('tan(') === str.length - 4) str = str.substr(0, str.length - 3);
-    if (str.indexOf('sqrt(') === str.length - 5) str = str.substr(0, str.length - 4);
-    if (str.indexOf('ln(') === str.length - 3) str = str.substr(0, str.length - 2);
+    if (str.length >= 4 &&
+      (str.indexOf('cos(') === str.length - 4 ||
+        str.indexOf('sin(') === str.length - 4 ||
+        str.indexOf('tan(') === str.length - 4)) str = str.substr(0, str.length - 3);
+    if (str.length >= 5 && str.indexOf('sqrt(') === str.length - 5) str = str.substr(0, str.length - 4);
+    if (str.length >= 3 && str.indexOf('ln(') === str.length - 3) str = str.substr(0, str.length - 2);
     str = str.substr(0, str.length - 1);
     upDate();
   } else if (str.length === 1) {
