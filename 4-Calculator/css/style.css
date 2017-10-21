@@ -189,6 +189,7 @@ body {
 }
 
 .detail {
+  height: 329px;
   text-align: right;
   overflow: auto;
 }
