@@ -24,6 +24,12 @@ function touchWall(e) {
   }
 }
 
+function clearWall() {
+  for (let wall of document.getElementsByName('walls')) {
+    wall.className = wall.className.replace(/red-wall/g, '');
+  }
+}
+
 for (let wall of document.getElementsByName('walls')) {
   wall.onmouseenter = touchWall;
 }
@@ -32,6 +38,7 @@ for (let wall of document.getElementsByName('walls')) {
 $('start').onmousemove = function(e) {
   gameStart = true;
   goOut = false;
+  clearWall();
   $('tip').className = 'tip tip-hide';
   $('gameBox').className = 'game-box pointer-hand';
 }

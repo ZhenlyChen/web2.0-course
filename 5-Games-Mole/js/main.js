@@ -66,6 +66,7 @@ function hitMole(i) {
   } else {
     score--;
     if (score < 0) {
+      score++;
       gameOver();
       return;
     }
@@ -78,7 +79,7 @@ function gameOver() {
   gameStart = false;
   clearAll();
   nowMole = -1;
-  alert('Game Over!\nYour score is' + score);
+  alert('Game Over!\nYour score is ' + score);
 }
 
 function setTime() {
