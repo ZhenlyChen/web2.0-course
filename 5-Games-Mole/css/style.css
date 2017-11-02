@@ -30,3 +30,13 @@ body {
   width: 20px;
   height: 20px;
 }
+
+.help-text {
+  text-align: left;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.help-text>p {
+  font-weight: bold;
+}

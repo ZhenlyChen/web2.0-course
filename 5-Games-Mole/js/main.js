@@ -16,12 +16,13 @@ for (let i = 0; i < 60; i++) {
   $('moles').appendChild(node);
 }
 
-for (let radio of document.getElementsByClassName('mole')) {
+Array.from(document.getElementsByClassName('mole'), radio => {
+  radio.checked = false;
   radio.onclick = function(e) {
     e.target.checked = false;
     if (gameStart) hitMole(e.target.value);
-  }
-}
+  };
+});
 
 $('startBtn').onclick = function(e) {
   gameStart = !gameStart;
@@ -34,12 +35,6 @@ $('startBtn').onclick = function(e) {
     makeMole();
     update();
     setTimeout(setTime, 1000);
-  }
-}
-
-function clearAll() {
-  for (let radio of document.getElementsByClassName('mole')) {
-    radio.checked = false;
   }
 }
 
@@ -56,7 +51,6 @@ function makeMole() {
   nowMole = id;
   let radios = document.getElementsByClassName('mole');
   radios[id].checked = true;
-  console.log(id);
 }
 
 function hitMole(i) {
@@ -66,7 +60,7 @@ function hitMole(i) {
   } else {
     score--;
     if (score < 0) {
-      score++;
+      score = 0;
       gameOver();
       return;
     }
@@ -77,8 +71,10 @@ function hitMole(i) {
 function gameOver() {
   $('stateText').value = 'Game Over';
   gameStart = false;
-  clearAll();
   nowMole = -1;
+  Array.from(document.getElementsByClassName('mole'), e => {
+    e.checked = false;
+  });
   alert('Game Over!\nYour score is ' + score);
 }
 
