@@ -30,9 +30,11 @@ function clearWall() {
   }
 }
 
-for (let wall of document.getElementsByName('walls')) {
-  wall.onmouseenter = touchWall;
-}
+(function() {
+  for (let wall of document.getElementsByName('walls')) {
+    wall.onmouseenter = touchWall;
+  }
+})();
 
 // 开始游戏
 $('start').onmousemove = function(e) {

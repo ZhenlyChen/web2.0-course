@@ -43,6 +43,7 @@ function moleCtrl() {
   };
   let control = {
     hit: (i) => {
+      if (!gameStart) return;
       if (i == nowMole) {
         score++;
         makeMole();
