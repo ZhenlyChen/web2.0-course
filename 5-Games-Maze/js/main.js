@@ -25,18 +25,17 @@ function touchWall(e) {
 }
 
 function clearWall() {
-  for (let wall of document.getElementsByName('walls')) {
-    wall.className = wall.className.replace(/red-wall/g, '');
-  }
+  Array.from(document.getElementsByName('walls'), (e) => {
+    e.className = e.className.replace(/red-wall/g, '');
+  });
 }
 
 (function() {
-  for (let wall of document.getElementsByName('walls')) {
-    wall.onmouseenter = touchWall;
-  }
+  Array.from(document.getElementsByName('walls'), (e) => {
+    e.onmouseenter = touchWall;
+  });
 })();
 
-// 开始游戏
 $('start').onmousemove = function(e) {
   gameStart = true;
   goOut = false;
