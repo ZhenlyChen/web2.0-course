@@ -9,13 +9,13 @@ function puzzleInit() {
     node.className = 'puzzle-part';
     node.name = 'puzzle-block';
     node.id = t;
-    node.src = '/images/' + t + '.gif';
+    node.src = 'images/' + t + '.gif';
     node.onclick = puzzleClick;
     flag.appendChild(node);
   })
   let node = document.createElement('img');
   node.className = 'puzzle-part blank-block';
-  node.src = '/images/16.gif';
+  node.src = 'images/16.gif';
   node.style.order = '16';
   node.id = '16';
   flag.appendChild(node);
