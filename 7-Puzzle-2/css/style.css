@@ -33,6 +33,10 @@ body {
   border: 1px solid grey;
 }
 
+.puzzle-part:hover {
+  transform: scale(1.05);
+}
+
 .puzzle-box {
   position: relative;
   width: 400px;
