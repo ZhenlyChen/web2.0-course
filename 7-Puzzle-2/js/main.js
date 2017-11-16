@@ -13,11 +13,11 @@ function puzzleInit() {
   }
   let flag = document.createDocumentFragment();
   Array.from(puzzle, (t) => {
-    let node = document.createElement('img');
-    node.className = 'puzzle-part puzzle-' + t;
-    node.name = 'puzzle-block';
+    let node = document.createElement('div');
+    node.className = t === 16 ? '' : 'puzzle-block img-' + t;
+    node.className += ' puzzle-part puzzle-' + t;
     node.id = t;
-    node.src = 'images/' + t + '.gif';
+    //node.src = 'images/' + t + '.gif';
     node.onclick = puzzleClick;
     node.setAttribute('position', t);
     flag.appendChild(node);
@@ -85,7 +85,7 @@ function simGenerate() {
 
 function puzzleStart() {
   let puzzle = simGenerate();
-  let block = document.getElementsByName('puzzle-block');
+  let block = document.getElementsByClassName('puzzle-block');
   Array.from(block, (e) => {
     let num = puzzle.pop();
     if (!num) num = 16;
@@ -115,7 +115,7 @@ function puzzleClick(e) {
 }
 
 function checkState() {
-  let allBlock = document.getElementsByName('puzzle-block');
+  let allBlock = document.getElementsByClassName('puzzle-block');
   let success = true;
   Array.from(allBlock, (e) => {
     if (e.id !== e.getAttribute('position')) success = false;
