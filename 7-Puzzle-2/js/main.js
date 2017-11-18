@@ -100,18 +100,17 @@ function puzzleClick(e) {
   let blank = document.getElementById('16');
   let blankBlock = parseInt(blank.getAttribute('position'));
   let self = parseInt(this.getAttribute('position'));
-  switch (blankBlock) {
-    case self + 1:
-    case self - 1:
-    case self + 4:
-    case self - 4:
-      setPosition(this, blankBlock);
-      setPosition(blank, self);
-      break;
-    default:
-      break;
+  if (getOffset(blankBlock, self) === 1) {
+    setPosition(this, blankBlock);
+    setPosition(blank, self);
   }
   checkState();
+}
+
+function getOffset(pos1, pos2) {
+  pos1--;
+  pos2--;
+  return Math.abs(pos1 % 4 - pos2 % 4) + Math.abs(Math.floor(pos1 / 4) - Math.floor(pos2 / 4));
 }
 
 function checkState() {
