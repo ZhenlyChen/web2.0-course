@@ -52,6 +52,7 @@ module.exports = function() {
     },
     endEvent: async function(ctx) {
       try {
+        process.stdout.write(` - ${ctx.res.statusCode} by ${ctx.req.connection.remoteAddress} : ${ctx.req.headers['user-agent']}\n`)
         if (ctx.body) {
           ctx.res.end(ctx.body)
         } else {

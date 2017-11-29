@@ -40,7 +40,6 @@ exports.userPage = async(ctx, next) => {
     if (ctx.param.query.username) {
       let user = await model.getByName(ctx.param.query.username.toString().toLowerCase())
       if (user) {
-        console.log(user)
         await hzml.load(__dirname + '/../hzml/user.hzml')
         await hzml.set({
           name: user.name,

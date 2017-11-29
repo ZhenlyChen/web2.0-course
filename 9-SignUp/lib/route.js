@@ -31,7 +31,7 @@ module.exports = function() {
       })
     },
     events: [async function(ctx, next) {
-      console.log(`${ctx.req.method} from ${ctx.req.url}`)
+      process.stdout.write(`${ctx.req.method} from ${ctx.req.url}`)
       ctx.res.statusCode = 404
       await next()
     }]
