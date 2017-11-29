@@ -1,0 +1,116 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+}
+
+.container {
+  padding-top: 100px;
+  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+  height: 100%;
+  width: 100%;
+  color: rgb(252, 250, 242);
+  text-align: center;
+  font-size: 16px;
+  min-height: 500px;
+}
+
+.title {
+  font-size: 30px;
+}
+
+input {
+  padding: 5px;
+  font-size: 20px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid rgb(252, 250, 242);
+  width: 250px;
+  margin-left: 50px;
+  color: rgb(252, 250, 242);
+  transition: all .3s;
+}
+
+input:focus {
+  outline: none;
+  margin-left: 45px;
+  width: 255px;
+}
+
+.errorInput {
+  border-bottom: 2px solid rgb(234, 51, 19);
+}
+
+.rightInput {
+  border-bottom: 2px solid rgb(15, 148, 44);
+}
+
+.input-box {
+  width: 300px;
+  display: inline-block;
+  text-align: left;
+}
+
+.user-box {
+  width: 300px;
+  display: inline-block;
+  text-align: left;
+}
+
+.user-box>p {
+  margin-top: 36px;
+}
+
+button {
+  color: rgb(252, 250, 242);
+  font-size: 17px;
+  background: transparent;
+  border: 2px solid rgb(252, 250, 242);
+  margin: 10px;
+  padding: 5px 20px;
+  border-radius: 5px;
+  user-select: none;
+  transition: all .3s;
+}
+
+button:hover {
+  background: rgb(252, 250, 242);
+  color: rgb(93, 172, 129);
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  color: rgb(252, 250, 242);
+  background: transparent;
+}
+
+.ctrl {
+  text-align: right;
+}
+
+.notice {
+  position: fixed;
+  top: 40px;
+  width: 250px;
+  height: 40px;
+  background: rgb(252, 244, 230);
+  border: 1px solid rgb(250, 235, 205);
+  color: rgb(234, 157, 19);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 20px;
+  transition: all .3s;
+}
+
+.notice-show {
+  right: 0;
+}
+
+.notice-hide {
+  right: -300px;
+}

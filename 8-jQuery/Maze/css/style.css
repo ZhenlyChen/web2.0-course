@@ -1,0 +1,157 @@
+h1,
+p {
+  text-align: center;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+.help-text {
+  text-align: left;
+  font-size: 13px;
+}
+
+.game-view {
+  width: 500px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.game-box {
+  margin: auto 20px;
+  padding: 0;
+  overflow: hidden;
+  font-size: 0;
+  /* 解决换行引起的空隙 */
+}
+
+.gary-block {
+  transition: all .4s;
+  vertical-align: top;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #eeeeee;
+}
+
+.red-wall {
+  background: red;
+}
+
+.pointer-hand {
+  cursor: pointer;
+}
+
+.sample-box {
+  margin: auto;
+  float: none;
+  border: 1px solid black;
+  height: 30px;
+  width: 120px;
+}
+
+.box-1 {
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  height: 40px;
+  width: 150px;
+}
+
+.box-2 {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 40px;
+  width: 150px;
+}
+
+.box-3 {
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  height: 40px;
+  width: 150px;
+}
+
+.box-4 {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 150px;
+  width: 150px;
+}
+
+.box-5 {
+  margin-left: 150px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  height: 150px;
+  width: 90px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 30px;
+}
+
+.box-6 {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 150px;
+  width: 150px;
+  margin-bottom: 30px;
+}
+
+.box-7 {
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 30px;
+  width: 180px;
+}
+
+.box-8 {
+  border-bottom: 1px solid black;
+  height: 30px;
+  width: 90px;
+}
+
+.box-9 {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 30px;
+  width: 180px;
+}
+
+.start-box {
+  height: 26px;
+  width: 26px;
+  background: #84FF83;
+  margin: 2px 5px;
+  float: left;
+  transform: translateY(-60px);
+  font-size: 20px;
+  user-select: none;
+}
+
+.end-box {
+  height: 26px;
+  width: 26px;
+  background: #8885FF;
+  margin: 2px 5px;
+  float: right;
+  transform: translateY(-60px);
+  font-size: 20px;
+  user-select: none;
+}
+
+.tip {
+  transition: all .5s;
+}
+
+.tip-show {
+  opacity: 1;
+}
+
+.tip-hide {
+  opacity: 0;
+}

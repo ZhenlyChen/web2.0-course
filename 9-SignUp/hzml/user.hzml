@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>详情</title>
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div>
+      <p class="title">用户详情</p>
+      <div class="user-box">
+        <p><i class="fa fa-user-o fa-fw" aria-hidden="true"></i> 用户名:
+          <%=name%>
+        </p>
+        <p><i class="fa fa-id-card-o fa-fw" aria-hidden="true"></i> 学号:
+          <%=id%>
+        </p>
+        <p><i class="fa fa-phone fa-fw" aria-hidden="true"></i> 电话:
+          <%=phone%>
+        </p>
+        <p><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i> 邮箱:
+          <%=email%>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

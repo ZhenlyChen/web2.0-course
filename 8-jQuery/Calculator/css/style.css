@@ -1,0 +1,144 @@
+body {
+  background: white;
+  font-family: Arial;
+}
+
+.container {
+  position: absolute;
+  left: 127px;
+  top: 87px;
+  background: rgb(235, 235, 235);
+  transform: translateY(30px);
+  text-align: center;
+  width: 397px;
+  border: 1px solid rgb(0, 153, 188);
+  padding: 2px;
+  box-shadow: 0px 0px 35px -5px gray;
+  border-radius: 1px;
+}
+
+.container h1 {
+  text-align: left;
+  font-size: 11px;
+  margin: 8px 0px 20px 5px;
+  font-weight: normal;
+  user-select: none;
+}
+
+.screen {
+  background: rgb(235, 235, 235);
+  border: none;
+  font-size: 35px;
+  text-align: right;
+  margin-top: 0px;
+  margin-right: 10px;
+}
+
+.mini-screen {
+  font-size: 20px;
+  color: rgb(150, 150, 150);
+  margin-bottom: 5px;
+  width: 390px;
+  text-align: right;
+}
+
+.button-close {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  padding: 5px 22px 20px 16px;
+  height: 15px;
+  width: 15px;
+  border: none;
+  background: rgb(235, 235, 235);
+  text-align: center;
+  user-select: none;
+  font-family: Verdana;
+}
+
+.button-close:hover {
+  background: rgb(232, 17, 35);
+  color: #ffffff;
+}
+
+.notice {
+  position: absolute;
+  top: 0px;
+  left: 112px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgb(232, 17, 35);
+  margin: 0px;
+  padding: 2px 50px 5px 50px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  user-select: none;
+  display: none;
+}
+
+.button-box {
+  display: flex;
+  flex-wrap: wrap;
+  user-select: none;
+}
+
+.button-box button {
+  width: 95px;
+  height: 60px;
+  border: none;
+  margin: 2px;
+  font-size: 25px;
+}
+
+.button-num {
+  font-weight: bold;
+  background: rgb(251, 251, 251);
+}
+
+.button-num:hover {
+  background: rgb(209, 209, 209);
+}
+
+.button-num:active {
+  background: rgb(187, 187, 187);
+}
+
+.button-other {
+  background: rgb(244, 244, 244);
+}
+
+.button-other:hover {
+  color: #fff;
+  background: rgb(0, 153, 188);
+}
+
+.button-other:active {
+  color: #fff;
+  background: rgb(7, 190, 231);
+}
+
+.icon {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  display: none;
+  height: 150px;
+  width: 150px;
+  background: rgb(0, 153, 188);
+  border: 1px solid rgb(0, 153, 188);
+  box-shadow: 0px 0px 35px -5px gray;
+  transition: all .5s;
+}
+
+.icon:hover {
+  box-shadow: 0px 0px 35px 0px gray;
+}
+
+.icon p {
+  position: absolute;
+  bottom: -12px;
+  left: 11px;
+  font-size: 18px;
+  color: #fff;
+  background: rgb(0, 153, 188);
+  user-select: none;
+}

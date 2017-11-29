@@ -1,0 +1,42 @@
+body {
+  text-align: center;
+  min-width: 427px;
+}
+
+.moles {
+  margin: auto;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  width: 290px;
+  font-size: 20px;
+}
+
+.control {
+  width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.right {
+  float: right;
+}
+
+.right input {
+  width: 40px;
+  margin-left: 10px;
+}
+
+.mole {
+  width: 20px;
+  height: 20px;
+}
+
+.help-text {
+  text-align: left;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.help-text>p {
+  font-weight: bold;
+}
