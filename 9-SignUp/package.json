@@ -4,7 +4,8 @@
   "description": "A Sign Up System",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "build": "node index.js",
+    "dev": "node test/index.js"
   },
   "author": "zhenlychen@foxmail.com",
   "license": "MIT"

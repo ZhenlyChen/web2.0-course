@@ -6,6 +6,10 @@ A micro wed server by ZhenlyChen
 - static: 静态文件中间件
 - hzml：模板文件处理器
 
-## 运行
+## 测试
 
-npm run
+npm run dev
+
+## 部署服务
+
+npm run build
