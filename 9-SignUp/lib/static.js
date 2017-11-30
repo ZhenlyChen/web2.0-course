@@ -1,16 +1,19 @@
 const fs = require('fs')
-const fileType = {
-  html: 'text/html',
-  css: 'text/css',
-  js: 'text/javascript',
-  ico: 'image/ico',
-  other: 'text/plain'
-}
+const path = require('path')
 
 function getFileType(name) {
-  let type = name.split('.')
-  if (type.length !== 2) return fileType.other
-  return fileType[type[1]] || fileType.other
+  const fileType = {
+    ".html": 'text/html',
+    ".css": 'text/css',
+    ".js": 'text/javascript',
+    ".ico": 'image/ico',
+    ".jpg": "image/jpeg",
+    ".gif": "image/gif",
+    ".png": "image/png",
+    ".other": 'text/plain'
+  }
+  let type = path.extname(name)
+  return fileType[type] || fileType.other
 }
 
 module.exports = function(option) {
@@ -40,7 +43,7 @@ module.exports = function(option) {
         let hasFile = false
         for (let file of Static.files) {
           let url = ctx.req.url === '/' ? Static.defaultIndex : ctx.req.url
-          if (url.substr(0, file.name.length) === file.name || url + Static.defaultType === file.name) {
+          if (url.substr(0, file.name.length) === file.name) {
             let fileInfo = await fs.statSync(file.path + file.name)
             await ctx.res.writeHead(200, { 'Content-Type': getFileType(file.name) })
             let data = await fs.readFileSync(file.path + file.name)

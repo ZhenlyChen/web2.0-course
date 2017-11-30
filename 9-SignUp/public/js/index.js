@@ -89,17 +89,21 @@ $('submit').onclick = e => {
         case 'name':
           notice.show('用户名重复')
           $('userName').focus()
+          $('userName').className = 'errorInput'
           break
         case 'id':
           notice.show('学号重复')
+          $('userId').className = 'errorInput'
           $('userId').focus()
           break
         case 'phone':
           notice.show('手机号码重复')
+          $('userPhone').className = 'errorInput'
           $('userPhone').focus()
           break
         case 'email':
           notice.show('邮箱重复')
+          $('userEmail').className = 'errorInput'
           $('userEmail').focus()
           break
         default:

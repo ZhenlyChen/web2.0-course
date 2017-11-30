@@ -14,8 +14,7 @@ module.exports = function() {
       this.events.push(async function(ctx, next) {
         if (ctx.req.method === 'POST' && url === ctx.req.url.substr(0, url.length)) {
           ctx.res.statusCode = 200
-          ctx.body =
-            await fun(ctx, next)
+          await fun(ctx, next)
         } else {
           await next()
         }
@@ -32,7 +31,6 @@ module.exports = function() {
     },
     events: [async function(ctx, next) {
       process.stdout.write(`${ctx.req.method} from ${ctx.req.url}`)
-      ctx.res.statusCode = 404
       await next()
     }]
   }

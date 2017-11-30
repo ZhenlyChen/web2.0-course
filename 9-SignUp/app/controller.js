@@ -1,5 +1,6 @@
 const querystring = require('querystring')
 const model = require('./model')
+const path = require('path')
 const Hzml = require('../lib/hzml')
 const hzml = new Hzml()
 
@@ -25,11 +26,7 @@ exports.register = async ctx => {
       }
     }
     let result = await model.add(userData)
-    if (result === true) {
-      ctx.res.write(JSON.stringify({ state: true }))
-    } else {
-      ctx.res.write(JSON.stringify({ state: result }))
-    }
+    ctx.res.write(JSON.stringify({ state: result }))
   } catch (error) {
     console.error(error)
   }
@@ -40,7 +37,7 @@ exports.userPage = async(ctx, next) => {
     if (ctx.param.query.username) {
       let user = await model.getByName(ctx.param.query.username.toString().toLowerCase())
       if (user) {
-        await hzml.load(__dirname + '/../hzml/user.hzml')
+        await hzml.load(path.dirname(__dirname) + '/hzml/user.hzml')
         await hzml.set({
           name: user.name,
           id: user.id,
@@ -49,7 +46,7 @@ exports.userPage = async(ctx, next) => {
         })
         await hzml.router(ctx)
       } else {
-        ctx.res.writeHead(301, { 'Location': '/' });
+        exports.deal404(ctx)
       }
     } else {
       await next()
