@@ -22,8 +22,12 @@ module.exports = function() {
       }
     },
     router: async(ctx) => {
-      await ctx.res.writeHead(200, { 'Content-Type': 'text/html' })
-      ctx.body = Buffer.from(this.file)
+      try {
+        await ctx.res.writeHead(200, { 'Content-Type': 'text/html' })
+        ctx.body = Buffer.from(this.file)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
   return Hzml
