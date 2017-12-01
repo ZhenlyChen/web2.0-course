@@ -76,41 +76,44 @@ $('submit').onclick = e => {
     return
   }
   async function submit() {
-    let userName = $('userName').value
-    let res = await axios.post('/api/register', {
-      name: $('userName').value,
-      id: $('userId').value,
-      phone: $('userPhone').value,
-      email: $('userEmail').value,
-    })
-    if (res.data.state === true) {
-      window.location.href = '/?username=' + userName
-    } else {
-      switch (res.data.state) {
-        case 'name':
-          notice.show('用户名重复')
-          $('userName').focus()
-          $('userName').className = 'errorInput'
-          break
-        case 'id':
-          notice.show('学号重复')
-          $('userId').className = 'errorInput'
-          $('userId').focus()
-          break
-        case 'phone':
-          notice.show('手机号码重复')
-          $('userPhone').className = 'errorInput'
-          $('userPhone').focus()
-          break
-        case 'email':
-          notice.show('邮箱重复')
-          $('userEmail').className = 'errorInput'
-          $('userEmail').focus()
-          break
-        default:
-          notice.show('非法操作')
+    try {
+      let userName = $('userName').value
+      let res = await axios.post('/api/register', {
+        name: $('userName').value,
+        id: $('userId').value,
+        phone: $('userPhone').value,
+        email: $('userEmail').value,
+      })
+      if (res.data.state === true) {
+        window.location.href = '/?username=' + userName
+      } else {
+        switch (res.data.state) {
+          case 'name':
+            notice.show('用户名重复')
+            $('userName').focus()
+            $('userName').className = 'errorInput'
+            break
+          case 'id':
+            notice.show('学号重复')
+            $('userId').className = 'errorInput'
+            $('userId').focus()
+            break
+          case 'phone':
+            notice.show('手机号码重复')
+            $('userPhone').className = 'errorInput'
+            $('userPhone').focus()
+            break
+          case 'email':
+            notice.show('邮箱重复')
+            $('userEmail').className = 'errorInput'
+            $('userEmail').focus()
+            break
+          default:
+            notice.show('非法操作')
+        }
       }
-
+    } catch (error) {
+      notice.show('无法连接到服务器，请重试')
     }
   }
   submit()
