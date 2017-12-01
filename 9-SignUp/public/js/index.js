@@ -14,7 +14,7 @@ const notice = {
     $('notice').innerText = text
     $('notice').className = 'notice notice-show'
     if (this.timer) clearTimeout(this.timer)
-    this.timer = setTimeout(this.hide, 5000)
+    this.timer = setTimeout(this.hide, 3000)
   },
   hide: () => {
     $('notice').className = 'notice notice-hide'
@@ -34,6 +34,7 @@ function checkInput(e, rule, text) {
 }
 
 $('reset').onclick = e => {
+  let userName = $('userName').value
   Array.from(document.getElementsByName('input'), input => {
     input.className = ''
     input.value = ''
@@ -83,7 +84,7 @@ $('submit').onclick = e => {
       email: $('userEmail').value,
     })
     if (res.data.state === true) {
-      window.location.href = '/?username=' + $('userName').value
+      window.location.href = '/?username=' + userName
     } else {
       switch (res.data.state) {
         case 'name':
