@@ -34,7 +34,6 @@ function checkInput(e, rule, text) {
 }
 
 $('reset').onclick = e => {
-  let userName = $('userName').value
   Array.from(document.getElementsByName('input'), input => {
     input.className = ''
     input.value = ''
@@ -77,6 +76,7 @@ $('submit').onclick = e => {
     return
   }
   async function submit() {
+    let userName = $('userName').value
     let res = await axios.post('/api/register', {
       name: $('userName').value,
       id: $('userId').value,
