@@ -1,0 +1,232 @@
+@mixin transition-effect($time, $delay) {
+  transition: all $time ease $delay;
+}
+
+#at-plus-container {
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+}
+
+#bottom-positioner {
+  margin: 0 auto;
+  #button {
+    .mouse {
+      z-index: -1;
+    }
+    &:hover {
+      .mouse {
+        position: absolute;
+        top: -140px;
+        left: -67px;
+        width: 164px;
+        height: 242px;
+      }
+      .apb {
+        height: 50px;
+        width: 50px;
+        background: rgba(48, 63, 159, 1);
+        background-image: url('../assets/images/atplus_green.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 80%;
+      }
+      .active {
+        background: rgb(48, 63, 159) !important;
+      }
+      #info-bar {
+        transform: translate(-35px, -140px);
+        background: rgb(126, 126, 126);
+        height: 130px;
+        width: 130px;
+        opacity: 1;
+        ul {
+          opacity: 1;
+          li {
+            opacity: 1;
+          }
+        }
+      }
+      #control-ring-container {
+        opacity: 1;
+        #control-ring {
+          .button {
+            &::after {
+              opacity: 1;
+            }
+          }
+          .unread {
+            opacity: 1;
+          }
+          .ring-a {
+            transform: translate(-50px, -20px);
+          }
+          .ring-b {
+            transform: translate(-65px, 20px);
+          }
+          .ring-c {
+            transform: translate(-50px, 55px);
+          }
+          .ring-d {
+            transform: translate(-15px, 75px);
+          }
+          .ring-e {
+            transform: translate(25px, 73px);
+          }
+        }
+      }
+    }
+  }
+}
+
+#button {
+  div {
+    position: fixed;
+    @include transition-effect(.5s,
+    .5s);
+    display: inline-block;
+    margin: 0 auto;
+  }
+}
+
+.apb {
+  height: 30px;
+  width: 30px;
+  border-radius: 100px;
+  background: rgb(153, 157, 204);
+  background-image: url('../assets/images/atplus_white.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 90%;
+}
+
+#control-ring-container {
+  opacity: 0;
+  #control-ring {
+    list-style-type: none;
+    position: fixed;
+    margin-left: -40px;
+    margin-top: -4px;
+    li {
+      position: fixed;
+      display: inline-block;
+      background: rgb(104, 104, 104);
+      border-radius: 100px;
+      color: rgb(87, 192, 147);
+      span {
+        color: white;
+      }
+    }
+    .active {
+      &::after {
+        background: rgb(48, 63, 159);
+      }
+    }
+    * {
+      @include transition-effect(.5s,
+      .5s);
+    }
+    .button {
+      &::after {
+        @include transition-effect(.2s,
+        .3s);
+        opacity: 0;
+        content: "";
+        display: block;
+        border-radius: 100px;
+        //background: rgb(104, 104, 104);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 60%;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+      }
+    }
+    .unread {
+      z-index: 1024;
+      transition: all .2s;
+      transition-delay: .3s;
+      opacity: 0;
+      display: inline-block;
+      text-align: center;
+      position: absolute;
+      transform: translate(4px, -6px);
+      background: red;
+      border-radius: 50%;
+      font-size: 12px;
+      height: 16px;
+      width: 16px;
+    }
+    .hide {
+      span {
+        display: none;
+      }
+    }
+    .ring-a {
+      &::after {
+        content: 'A';
+      }
+    }
+    .ring-b {
+      &::after {
+        content: 'B';
+      }
+    }
+    .ring-c {
+      &::after {
+        content: 'C';
+      }
+    }
+    .ring-d {
+      &::after {
+        content: 'D';
+      }
+    }
+    .ring-e {
+      &::after {
+        content: 'E';
+      }
+    }
+  }
+}
+
+#info-bar {
+  overflow: hidden;
+  height: 10px;
+  width: 10px;
+  border-radius: 100px;
+  opacity: 0;
+  div {
+    position: relative;
+    ul {
+      transition: opacity .3s ease-in .2s;
+      list-style-type: none;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateX(-20px);
+      li {
+        opacity: 0;
+        transition: all .2s ease .8s;
+        display: inline-block;
+        img {
+          margin-right: 5px;
+        }
+      }
+    }
+    span {
+      vertical-align: top;
+    }
+  }
+  .mine {
+    color: rgb(87, 192, 147);
+  }
+  .number {
+    display: inline-block;
+    margin-top: 32px;
+    font-size: 25px;
+    color: rgb(87, 192, 147);
+  }
+}

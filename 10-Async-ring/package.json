@@ -1,0 +1,11 @@
+{
+  "name": "10-async-ring",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "author": "zhenlychen@foxmail.com",
+  "license": "MIT"
+}
