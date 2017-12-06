@@ -82,6 +82,13 @@
 }
 
 #button {
+  .message {
+    color: black;
+    transform: translate(0, -184px);
+    position: absolute;
+    width: 323px;
+    text-align: left;
+  }
   div {
     position: fixed;
     @include transition-effect(.5s,

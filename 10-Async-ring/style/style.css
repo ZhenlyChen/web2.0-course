@@ -52,6 +52,12 @@
     #bottom-positioner #button:hover #control-ring-container #control-ring .ring-e {
       transform: translate(25px, 73px); }
 
+#button .message {
+  color: black;
+  transform: translate(0, -184px);
+  position: absolute;
+  width: 323px;
+  text-align: left; }
 #button div {
   position: fixed;
   transition: all 0.5s ease 0.5s;

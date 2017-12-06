@@ -12,6 +12,11 @@ function ctrl() {
           this.order.sort(() => {
             return (Math.random() - 0.5)
           })
+          this.message.innerText = ''
+          Array.from(this.order, e => {
+            this.message.innerText += String.fromCharCode(e + 65) + ','
+          })
+          this.message.innerText = this.message.innerText.substr(0, this.message.innerText.length - 1)
         }
         this.target[this.order[this.doneNumber]].e.click()
       }
@@ -33,6 +38,7 @@ function ctrl() {
         t.e.classList.add('hide')
       }
       this.total.innerText = ''
+      this.message.innerText = ''
     },
     done: function() {
       this.doneNumber++
@@ -93,6 +99,7 @@ function ctrl() {
   Ctrl.setBtn(4, document.getElementById('ringE'), document.getElementById('numE'))
   Ctrl.total = document.getElementById('total')
   Ctrl.big = document.getElementById('info-bar')
+  Ctrl.message = document.getElementById('message')
   return Ctrl;
 }
 
