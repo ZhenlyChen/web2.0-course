@@ -57,10 +57,10 @@ function ctrl() {
       let ring = document.getElementById('ringA')
       let num = document.getElementById('numA')
       num.innerText = '...'
+      ring.classList.remove('active')
       ring.classList.remove('hide')
       $.get('/getNumber', data => {
         if (!setMessage('这是一个天大的秘密')) return
-        ring.classList.remove('active')
         num.innerText = data
         e[0].f(e, all + parseInt(data), errorDeal)
       })

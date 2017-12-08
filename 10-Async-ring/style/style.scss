@@ -2,6 +2,10 @@
   transition: all $time ease $delay;
 }
 
+body {
+  user-select: none !important;
+}
+
 #at-plus-container {
   text-align: center;
   color: #fff;

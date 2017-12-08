@@ -5,11 +5,13 @@ function ctrl() {
     running: false,
     doneNumber: 0,
     isEnter: false,
+    state: 10,
     enter: function() {
       this.clean()
       this.isEnter = true
     },
     clean: function() {
+      this.state++;
       this.isEnter = false
       this.num = [0, 0, 0, 0, 0]
       this.running = false
@@ -33,6 +35,7 @@ function ctrl() {
         this.big.onclick = () => {
           this.total.innerText = numTotal
           this.big.className = ''
+          this.big.onclick = () => {}
         }
       }
     },
@@ -43,11 +46,12 @@ function ctrl() {
       this.target[id].child.innerText = '...'
       this.num[id] = -1
       this.disableBtn()
-      $.get('/', {}, data => {
-        if (!this.isEnter) return
+      let state = this.state
+      $.get('/' + (new Date()).getTime(), {}, data => {
+        if (!this.isEnter || state !== this.state) return
+        this.target[id].e.classList.remove('active')
         this.num[id] = parseInt(data)
         this.target[id].child.innerText = this.num[id]
-        this.target[id].e.classList.remove('active')
         this.done()
       })
     },

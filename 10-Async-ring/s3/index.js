@@ -5,6 +5,7 @@ function ctrl() {
     running: false,
     doneNumber: 0,
     isEnter: false,
+    state: 10,
     auto: function() {
       if (this.doneNumber === 0) {
         for (let t of this.target) {
@@ -53,11 +54,12 @@ function ctrl() {
       this.target[id].child.innerText = '...'
       this.num[id] = -1
       this.disableBtn()
-      $.get('/getNumber/?' + (new Date()).getTime(), {}, data => {
-        if (!this.isEnter) return
+      let state = this.state
+      $.get('/' + id + (new Date()).getTime(), {}, data => {
+        if (!this.isEnter || state !== this.state) return
+        this.target[id].e.classList.remove('active')
         this.num[id] = parseInt(data)
         this.target[id].child.innerText = this.num[id]
-        this.target[id].e.classList.remove('active')
         this.done()
       })
     },
@@ -69,13 +71,13 @@ function ctrl() {
       }
     },
     disableBtn: function() {
-      for (let i = 0 i < 5 i++) {
+      for (let i = 0; i < 5; i++) {
         if (this.num[i] > 0 || this.num[i] === -1) continue
         this.target[i].e.classList.remove('active')
       }
     },
     ableBtn: function() {
-      for (let i = 0 i < 5 i++) {
+      for (let i = 0; i < 5; i++) {
         if (this.num[i] !== 0) continue
         this.target[i].e.classList.add('active')
       }

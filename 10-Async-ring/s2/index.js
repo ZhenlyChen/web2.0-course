@@ -5,6 +5,7 @@ function ctrl() {
     running: false,
     doneNumber: 0,
     isEnter: false,
+    state: 10,
     auto: function() {
       if (this.doneNumber === 5) {
         this.big.click()
@@ -51,11 +52,12 @@ function ctrl() {
       this.target[id].child.innerText = '...'
       this.num[id] = -1
       this.disableBtn()
-      $.get('/', {}, data => {
-        if (!this.isEnter) return
+      let state = this.state
+      $.get('/' + (new Date()).getTime(), {}, data => {
+        if (!this.isEnter || state !== this.state) return
+        this.target[id].e.classList.remove('active')
         this.num[id] = parseInt(data)
         this.target[id].child.innerText = this.num[id]
-        this.target[id].e.classList.remove('active')
         this.done()
       })
     },

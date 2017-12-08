@@ -6,7 +6,10 @@ function ctrl() {
     doneNumber: 0,
     isEnter: false,
     order: [0, 1, 2, 3, 4],
-    auto: function() {
+    state: 10,
+    auto: function(e) {
+      if (e !== undefined && this.running) return;
+      this.running = true
       if (this.doneNumber >= 0 && this.doneNumber < 5) {
         if (this.doneNumber === 0) {
           this.order.sort(() => {
@@ -18,10 +21,12 @@ function ctrl() {
           })
           this.message.innerText = this.message.innerText.substr(0, this.message.innerText.length - 1)
         }
-        this.target[this.order[this.doneNumber]].e.click()
+        if (!this.isEnter) return;
+        this.target[this.order[this.doneNumber]].e.autoClick()
       }
       if (this.doneNumber === 5) {
         this.big.click()
+        this.running = false
       }
     },
     enter: function() {
@@ -41,8 +46,7 @@ function ctrl() {
       this.message.innerText = ''
     },
     done: function() {
-      this.doneNumber++
-        this.running = false
+      this.doneNumber++;
       this.ableBtn()
       if (this.doneNumber === 5) {
         let numTotal = 0;
@@ -57,23 +61,24 @@ function ctrl() {
       }
       this.auto()
     },
-    click: function(id) {
+    click: function(id, e) {
       if (this.num[id] !== 0) return
       this.running = true
       this.target[id].e.classList.remove('hide')
       this.target[id].child.innerText = '...'
       this.num[id] = -1
       this.disableBtn()
-      $.get('/', {}, data => {
-        if (!this.isEnter) return
+      let state = this.state
+      $.get('/' + (new Date()).getTime(), {}, data => {
+        if (!this.isEnter || state !== this.state) return
+        this.target[id].e.classList.remove('active')
         this.num[id] = parseInt(data)
         this.target[id].child.innerText = this.num[id]
-        this.target[id].e.classList.remove('active')
         this.done()
       })
     },
     setBtn: function(index, e, child) {
-      e.onclick = this.click.bind(this, index)
+      e.autoClick = this.click.bind(this, index)
       this.target[index] = {
         e: e,
         child: child,
@@ -109,4 +114,10 @@ let myCtrl = new ctrl()
 
 document.getElementById('button').onmouseleave = myCtrl.clean.bind(myCtrl)
 document.getElementById('button').onmouseenter = myCtrl.enter.bind(myCtrl)
-document.getElementById('apb').onclick = myCtrl.auto.bind(myCtrl)
+document.getElementById('apb').onclick = () => {
+  console.log(myCtrl.running)
+  if (!myCtrl.running) {
+    myCtrl.running = true
+    myCtrl.auto.apply(myCtrl)
+  }
+}
