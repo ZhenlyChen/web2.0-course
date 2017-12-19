@@ -1,0 +1,20 @@
+{
+  "name": "signin",
+  "version": "1.0.0",
+  "description": "Sign In System by Koa2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zhenlychen@foxmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "kcors": "^2.2.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-helmet": "^3.3.0",
+    "koa-logger": "^3.1.0",
+    "koa-session": "^5.5.1",
+    "koa2": "^2.0.0-alpha.7",
+    "require-indexify": "^1.0.0"
+  }
+}
