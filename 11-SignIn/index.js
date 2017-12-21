@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(require('./app/router'))
 
 app.use((req, res, next) => {
-  res.status(404).send('404 NOT FOUND!')
+  res.status(404).render('message.ejs', {message: '404 NOT FOUND'})
 })
 
 const server = app.listen(program.port || 8080, () => {

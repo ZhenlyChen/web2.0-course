@@ -34,7 +34,11 @@ function userPage (req, res, next) {
 }
 
 exports.registerPage = (req, res) => {
-  res.render('register.ejs')
+  if (req.session.userId) {
+    res.render('message.ejs', { message: '请退出登陆后再进行注册.' })
+  } else {
+    res.render('register.ejs')
+  }
 }
 
 exports.login = (req, res, next) => {

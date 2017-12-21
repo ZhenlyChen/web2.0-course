@@ -4,7 +4,7 @@
   "description": "A Sample Sign In System",
   "main": "index.js",
   "scripts": {
-    "test": "standard && node my-tests.js"
+    "dev": "node index.js"
   },
   "author": "zhenlychen@foxmail.com",
   "license": "MIT",
